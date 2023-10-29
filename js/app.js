@@ -38,7 +38,7 @@ function showProducts(category) {
                         <div>
                             <h3>${name}</h3>
                             <p>Description: ${description}</p>
-                            <p>Price: $${price}</p>
+                            <p>Price: ${price} PLN</p>
                             <button>Add to Cart</button>
                         </div>
                     </div>
