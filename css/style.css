@@ -1,54 +1,80 @@
-@import url("https://fonts.googleapis.com/css?family=Nunito:400,700&display=swap");
-
-* {
+body {
+    background-color: #E4E4F7;
+    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
 }
-
-body {
-    background: #fdfdfd;
-    font-family: "Nunito", sans-serif;
-    font-size: 1rem;
-}
-
-main {
-    max-width: 900px;
-    margin: auto;
-    padding: 0.5rem;
+header {
+    background-color: #622B91;
+    padding: 20px;
     text-align: center;
 }
-
 nav {
+    text-align: center;
+    margin-top: 20px;
+}
+nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+nav ul li {
+    display: inline;
+    margin: 0 10px;
+}
+.container {
+    width: 100%;
     display: flex;
-    justify-content: space-between;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+.product {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    margin: 10px;
+    width: 80%;
+    text-align: center;
+    box-sizing: border-box;
+    display: flex;
     align-items: center;
 }
-
-ul {
-    list-style: none;
+.product img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    margin-right: 20px;
+}
+.product {
     display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+.product div {
+    flex: 1;
 }
 
-li {
-    margin-right: 1rem;
+.product div h3 {
+    margin: 0;
 }
 
-h1 {
-    color: #e74c3c;
-    margin-bottom: 0.5rem;
+.product div p {
+    margin: 5px 0;
 }
 
-.vertical-menu {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .vertical-menu li {
-    display: block;
-    margin-bottom: 10px; /* Ustaw odpowiedni odstęp między pozycjami */
-  }
-  
-  .add-button {
-    margin-left: 10px; /* Dodaj odstęp między pozycją a przyciskiem */
-  }
+.product div button {
+    padding: 5px 10px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+footer {
+    position:fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgb(78, 11, 141);
+    color: #ffffff;
+}

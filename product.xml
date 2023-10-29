@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<products>
+    <category name="burgers">
+        <product>
+            <name>Classic Burger</name>
+            <description>Delicious classic burger</description>
+            <price>5.99</price>
+            <image>burger1.jpg</image>
+        </product>
+        <product>
+            <name>Cheeseburger</name>
+            <description>Burger with melted cheese</description>
+            <price>6.49</price>
+            <image>burger2.jpg</image>
+        </product>
+        <product>
+            <name>Veggie Burger</name>
+            <description>Vegetarian burger</description>
+            <price>5.99</price>
+            <image>burger3.jpg</image>
+        </product>
+    </category>
+    <category name="wraps">
+        <product>
+            <name>Grilled Chicken Wrap</name>
+            <description>Grilled chicken wrapped in a tortilla</description>
+            <price>6.49</price>
+            <image>wrap1.jpg</image>
+        </product>
+        <product>
+            <name>Veggie Wrap</name>
+            <description>Wrap with fresh vegetables</description>
+            <price>5.99</price>
+            <image>wrap2.jpg</image>
+        </product>
+        <product>
+            <name>BBQ Chicken Wrap</name>
+            <description>Wrap with BBQ chicken filling</description>
+            <price>6.99</price>
+            <image>wrap3.jpg</image>
+        </product>
+    </category>
+    <category name="sides">
+        <product>
+            <name>Fries</name>
+            <description>Crispy French fries</description>
+            <price>2.99</price>
+            <image>fries1.jpg</image>
+        </product>
+        <product>
+            <name>Onion Rings</name>
+            <description>Crunchy onion rings</description>
+            <price>3.49</price>
+            <image>rings1.jpg</image>
+        </product>
+        <product>
+            <name>Coleslaw</name>
+            <description>Fresh coleslaw salad</description>
+            <price>2.49</price>
+            <image>coleslaw1.jpg</image>
+        </product>
+    </category>
+    <category name="combos">
+        <product>
+            <name>Family Combo</name>
+            <description>Perfect for a family meal</description>
+            <price>19.99</price>
+            <image>familycombo1.jpg</image>
+        </product>
+        <product>
+            <name>Meal for Two</name>
+            <description>Ideal combo for two people</description>
+            <price>12.99</price>
+            <image>meal42.jpg</image>
+        </product>
+        <product>
+            <name>Lunch Box Special</name>
+            <description>Special combo for lunch</description>
+            <price>8.99</price>
+            <image>lunchspecial1.jpg</image>
+        </product>
+    </category>
+</products>
