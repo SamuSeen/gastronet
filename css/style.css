@@ -8,6 +8,10 @@ body {
 header {
     background-color: #622B91;
     padding: 20px;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+    top: 0;
     }
 
 nav {
@@ -45,8 +49,8 @@ nav ul li {
 }
 
 .product img {
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 80px;
     object-fit: cover;
     margin-right: 20px;
 }
@@ -88,18 +92,16 @@ footer {
     color: #ffffff;
 }
 button {
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    margin: 10px;
-    width: 200px;
-    text-align: center;
-    box-sizing: border-box;
-    background-color: #ff0000; /* Kolor tła */
-    color: white; /* Kolor tekstu */
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s, transform 0.3s;
+    display: inline-block; /* Ustawienie przycisków obok siebie */
+            padding: 10px 20px; /* Wielkość przycisków */
+            margin: 5px; /* Odstęp między przyciskami */
+            background-color: #ff0000; /* Kolor tła przycisku */
+            color: white; /* Kolor tekstu na przycisku */
+            border: none; /* Usunięcie obramowania */
+            text-align: center; /* Wyśrodkowanie tekstu */
+            text-decoration: none;
+            font-size: 16px;
+            cursor: pointer;
 }
 
 button:hover {
