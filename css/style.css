@@ -116,6 +116,7 @@ h1 {
     top: 0;
     left: 0;
     width: 100%;
-    background-color: #fff; /* Jeśli chcesz mieć tło sekcji filtrów */
+    background-color: #acacac; /* Jeśli chcesz mieć tło sekcji filtrów */
     z-index: 100; /* Ustala, że sekcja ma być na wierzchu innych elementów */
+    padding: 1px;
 }
