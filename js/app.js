@@ -1,9 +1,19 @@
+//Service worker
 if (typeof navigator.serviceWorker !== 'undefined') {
     navigator.serviceWorker.register('sw.js')
         .then(() => console.log('service worker registered'))
-        .catch(() => console.log('service worker no registered'))
+        .catch(() => console.log('service worker not registered'))
+    navigator.serviceWorker.getRegistration()
+        .then(reg => {
+            reg.pushManager.subscribe({
+                userVisibleOnly: true
+            }).then(sub=> {
+                //send sub.toJSON()
+            })
+        })
 }
 
+//Menu
 function loadXMLDoc(filename) {
     if (window.XMLHttpRequest) {
         xhttp = new XMLHttpRequest();
