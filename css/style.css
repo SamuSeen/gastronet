@@ -88,3 +88,22 @@ footer {
     background-color: rgb(78, 11, 141);
     color: #ffffff;
 }
+button {
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin: 10px;
+    width: 200px;
+    text-align: center;
+    box-sizing: border-box;
+    background-color: #ff0000; /* Kolor tła */
+    color: white; /* Kolor tekstu */
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+button:hover {
+    background-color: #ff0000; /* Kolor tła po najechaniu myszką */
+    transform: scale(1.05);
+}
