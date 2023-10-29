@@ -1,6 +1,6 @@
 //Service worker
 if (typeof navigator.serviceWorker !== 'undefined') {
-    navigator.serviceWorker.register('sw.js')
+    navigator.serviceWorker.register('js/sw.js')
         .then((registration) => {
             return registration.pushManager
                 .getSubscription()
@@ -31,6 +31,24 @@ if (typeof navigator.serviceWorker !== 'undefined') {
                 },
                 body: JSON.stringify({ subscription }),
             });
+            document.getElementById("subscribe").onclick = () => {
+                const payload = document.getElementById("notification-payload").value;
+                const delay = document.getElementById("notification-delay").value;
+                const ttl = document.getElementById("notification-ttl").value;
+
+                fetch("./sendNotification", {
+                    method: "post",
+                    headers: {
+                        "Content-type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        subscription,
+                        payload,
+                        delay,
+                        ttl,
+                    }),
+                });
+            };
         })
         .catch(() => console.log('service worker not registered'))
 }
