@@ -1,3 +1,7 @@
+if (' serviceWorker' in navigator){
+    navigator.serviceWorker.register('/service-worker.js')
+}
+
 function loadXMLDoc(filename) {
     if (window.XMLHttpRequest) {
         xhttp = new XMLHttpRequest();
