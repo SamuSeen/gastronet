@@ -4,29 +4,35 @@ body {
     margin: 0;
     padding: 0;
 }
+
 header {
     background-color: #622B91;
     padding: 20px;
     text-align: center;
 }
+
 nav {
     text-align: center;
     margin-top: 20px;
 }
+
 nav ul {
     list-style-type: none;
     padding: 0;
 }
+
 nav ul li {
     display: inline;
     margin: 0 10px;
 }
+
 .container {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
 }
+
 .product {
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -38,12 +44,14 @@ nav ul li {
     display: flex;
     align-items: center;
 }
+
 .product img {
     width: 150px;
     height: 150px;
     object-fit: cover;
     margin-right: 20px;
 }
+
 .product {
     display: flex;
     align-items: center;
@@ -51,6 +59,7 @@ nav ul li {
     border: 1px solid #ccc;
     padding: 10px;
 }
+
 .product div {
     flex: 1;
 }
@@ -70,8 +79,9 @@ nav ul li {
     border: none;
     cursor: pointer;
 }
+
 footer {
-    position:fixed;
+    position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
