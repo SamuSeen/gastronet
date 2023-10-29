@@ -120,3 +120,9 @@ h1 {
     z-index: 100; /* Ustala, że sekcja ma być na wierzchu innych elementów */
     padding: 1px;
 }
+.fixed-koszyk {
+    scale: 15%;
+    position: fixed;
+    bottom: -180px; /* Ustaw odległość od dolnej krawędzi ekranu (możesz dostosować) */
+    right: -180px; /* Ustaw odległość od prawego brzegu ekranu (możesz dostosować) */
+}
