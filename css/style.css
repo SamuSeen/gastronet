@@ -107,3 +107,10 @@ button:hover {
     background-color: #ff0000; /* Kolor tła po najechaniu myszką */
     transform: scale(1.05);
 }
+h1 {
+    font-size: 36px;
+    color: #333;
+    font-family: "Lucida Handwriting", cursive ;
+    margin: 0;
+    padding: 0;
+}
