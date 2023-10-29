@@ -111,3 +111,28 @@ h1 {
     margin: 0;
     padding: 0;
 }
+.fixed-filters {
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #acacac; /* Jeśli chcesz mieć tło sekcji filtrów */
+    z-index: 100; /* Ustala, że sekcja ma być na wierzchu innych elementów */
+    padding: 1px;
+}
+.fixed-filters ul {
+    white-space: nowrap;
+    overflow-x: auto;
+    padding: 5px 0; /* D
+    odaj wypełnienie, aby oddzielić od góry i dołu */
+}
+.fixed-filters ul li {
+    display: inline-block;
+    margin-right: 10px; /* Dodaj margines między przyciskami (możesz dostosować) */
+}
+.fixed-koszyk {
+    scale: 15%;
+    position: fixed;
+    bottom: -180px; /* Ustaw odległość od dolnej krawędzi ekranu (możesz dostosować) */
+    right: -180px; /* Ustaw odległość od prawego brzegu ekranu (możesz dostosować) */
+}
