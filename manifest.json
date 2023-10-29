@@ -1,0 +1,10 @@
+{
+    "name": "Gastronet",
+    "short_name": "Gnet",
+    "start_url": "/?home=true",
+    "icons": [],
+    "theme_color": "#000000",
+    "background_color": "#622b91",
+    "display": "fullscreen",
+    "orientation": "portrait"
+}
