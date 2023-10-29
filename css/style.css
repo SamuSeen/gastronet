@@ -111,3 +111,11 @@ h1 {
     margin: 0;
     padding: 0;
 }
+.fixed-filters {
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #fff; /* Jeśli chcesz mieć tło sekcji filtrów */
+    z-index: 100; /* Ustala, że sekcja ma być na wierzchu innych elementów */
+}
