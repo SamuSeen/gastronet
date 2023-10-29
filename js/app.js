@@ -1,25 +1,58 @@
 //Service worker
 if (typeof navigator.serviceWorker !== 'undefined') {
     navigator.serviceWorker.register('sw.js')
-        .then(() => console.log('service worker registered'))
-        .catch(() => console.log('service worker not registered'))
-    navigator.serviceWorker.getRegistration()
-        .then(reg => {
-            reg.pushManager.subscribe({
-                userVisibleOnly: true
-            }).then(sub=> {
-                //send sub.toJSON()
-            })
+        .then((registration) => {
+            return registration.pushManager
+                .getSubscription()
+                .then(async (subscription) => {
+                    // registration part
+                    async (subscription) => {
+                        if (subscription) {
+                            return subscription;
+                        } else {
+                            const response = await fetch("./vapidPublicKey");
+                            const vapidPublicKey = await response.text();
+                            const convertedVapidKey = urlBase64ToUint8Array(vapidPublicKey);
+                            registration.pushManager.subscribe({
+                                userVisibleOnly: true,
+                                applicationServerKey: convertedVapidKey,
+                            });
+                        }
+                    };
+
+                });
         })
+        .then((subscription) => {
+            // subscription part
+            fetch("./register", {
+                method: "post",
+                headers: {
+                    "Content-type": "application/json",
+                },
+                body: JSON.stringify({ subscription }),
+            });
+        })
+        .catch(() => console.log('service worker not registered'))
 }
 
-//Perm requests
-Notification.requestPermission().then((result) => {
+//Notifications ale chcemy Push
+/*Notification.requestPermission().then((result) => {
     if (result === "granted") {
         randomNotification();
     }
 });
-
+function randomNotification() {
+    const randomItem = Math.floor(Math.random() * games.length);
+    const notifTitle = games[randomItem].name;
+    const notifBody = `Created by ${games[randomItem].author}.`;
+    const notifImg = `data/img/${games[randomItem].slug}.jpg`;
+    const options = {
+        body: notifBody,
+        icon: notifImg,
+    };
+    new Notification(notifTitle, options);
+    setTimeout(randomNotification, 30000);
+}*/
 
 //Menu
 function loadXMLDoc(filename) {
