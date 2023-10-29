@@ -88,18 +88,16 @@ footer {
     color: #ffffff;
 }
 button {
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    margin: 10px;
-    width: 200px;
-    text-align: center;
-    box-sizing: border-box;
-    background-color: #ff0000; /* Kolor tła */
-    color: white; /* Kolor tekstu */
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s, transform 0.3s;
+    display: inline-block; /* Ustawienie przycisków obok siebie */
+            padding: 10px 20px; /* Wielkość przycisków */
+            margin: 5px; /* Odstęp między przyciskami */
+            background-color: #ff0000; /* Kolor tła przycisku */
+            color: white; /* Kolor tekstu na przycisku */
+            border: none; /* Usunięcie obramowania */
+            text-align: center; /* Wyśrodkowanie tekstu */
+            text-decoration: none;
+            font-size: 16px;
+            cursor: pointer;
 }
 
 button:hover {
