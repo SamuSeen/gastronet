@@ -1,5 +1,5 @@
-if (' serviceWorker' in navigator){
-    navigator.serviceWorker.register('/service-worker.js')
+if (typeof navigator.serviceWorker !== 'undefined') {
+    navigator.serviceWorker.register('sw.js')
         .then(() => console.log('service worker registered'))
         .catch(() => console.log('service worker no registered'))
 }
