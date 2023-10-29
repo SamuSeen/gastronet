@@ -88,9 +88,9 @@ footer {
     color: #ffffff;
 }
 button {
-    display: inline-block; /* Ustawienie przycisków obok siebie */
+    display: inline-flex; /* Ustawienie przycisków obok siebie */
             padding: 5px 10px; /* Wielkość przycisków */
-            margin: 1px; /* Odstęp między przyciskami */
+            margin: 0px; /* Odstęp między przyciskami */
             background-color: #ff0000; /* Kolor tła przycisku */
             color: white; /* Kolor tekstu na przycisku */
             border: none; /* Usunięcie obramowania */
