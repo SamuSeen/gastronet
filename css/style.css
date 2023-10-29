@@ -120,6 +120,16 @@ h1 {
     z-index: 100; /* Ustala, że sekcja ma być na wierzchu innych elementów */
     padding: 1px;
 }
+.fixed-filters ul {
+    white-space: nowrap;
+    overflow-x: auto;
+    padding: 5px 0; /* D
+    odaj wypełnienie, aby oddzielić od góry i dołu */
+}
+.fixed-filters ul li {
+    display: inline-block;
+    margin-right: 10px; /* Dodaj margines między przyciskami (możesz dostosować) */
+}
 .fixed-koszyk {
     scale: 15%;
     position: fixed;
