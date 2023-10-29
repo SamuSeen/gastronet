@@ -13,6 +13,14 @@ if (typeof navigator.serviceWorker !== 'undefined') {
         })
 }
 
+//Perm requests
+Notification.requestPermission().then((result) => {
+    if (result === "granted") {
+        randomNotification();
+    }
+});
+
+
 //Menu
 function loadXMLDoc(filename) {
     if (window.XMLHttpRequest) {
