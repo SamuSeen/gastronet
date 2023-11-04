@@ -17,6 +17,13 @@
     text-align: center;
     margin-left: 25%;
 }
+h1 {
+    font-size: 36px;
+    color: #333;
+    font-family: "Lucida Handwriting", cursive ;
+    margin: 0;
+    padding: 0;
+}
 
 input {
     margin-bottom: 10px;
