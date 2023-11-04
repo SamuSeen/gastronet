@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Your Order from GastroNet</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css" />
+    <style>
+        #map {
+            height: 400px;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        input {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+
+    <form id="routeForm">
+        <input type="text" id="city" placeholder="Miejscowość">
+        <input type="text" id="street" placeholder="Ulica">
+        <input type="text" id="buildingNumber" placeholder="Numer budynku">
+        <input type="text" id="apartmentNumber" placeholder="Numer mieszkania">
+
+        <button type="button" onclick="findRoute()">Znajdź trasę</button>
+        <button type="button" onclick="getCurrentLocation()">Znajdź lokalizację</button>
+    </form>
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
+    <script>
+        var map = L.map('map').setView([52.240730, 20.981450], 13); // Współrzędne Vizja Park Okopowa Warszawa
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        var control = L.Routing.control({
+            routeWhileDragging: true
+        }).addTo(map);
+
+        function findRoute() {
+            var city = document.getElementById('city').value;
+            var street = document.getElementById('street').value;
+            var buildingNumber = document.getElementById('buildingNumber').value;
+            var apartmentNumber = document.getElementById('apartmentNumber').value;
+
+            var address = city + ', ' + street + ' ' + buildingNumber + (apartmentNumber ? '/' + apartmentNumber : '');
+
+            // Użyj tutaj API geokodowania, np. Nominatim API OpenStreetMap, aby przekształcić adres na współrzędne geograficzne
+            // Następnie ustaw je jako punkt docelowy w kontrolce tras
+
+            // Przykładowe użycie Nominatim API:
+            fetch('https://nominatim.openstreetmap.org/search?format=json&q=' + encodeURIComponent(address))
+                .then(response => response.json())
+                .then(data => {
+                    var destination = [data[0].lat, data[0].lon]; // Pobranie współrzędnych
+
+                    control.setWaypoints([
+                        L.latLng(destination[0], destination[1]),
+                        L.latLng(52.25052,20.97859) // Współrzędne Vizja Park Okopowa Warszawa
+                    ]);
+                })
+                .catch(error => {
+                    console.error('Błąd podczas pobierania danych z geokodera:', error);
+                });
+        }
+
+        function getCurrentLocation() {
+            if ("geolocation" in navigator) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    var userLocation = [position.coords.latitude, position.coords.longitude];
+
+                    control.setWaypoints([
+                        L.latLng(userLocation[0], userLocation[1]),
+                        L.latLng(52.25052,20.97859) // Współrzędne Vizja Park Okopowa Warszawa
+                    ]);
+                });
+            } else {
+                alert("Twoja przeglądarka nie obsługuje geolokalizacji.");
+            }
+        }
+    </script>
+</body>
+</html>
