@@ -1,6 +1,6 @@
 //Service worker
 //trying to implement push notifications, again
-if ('serviceWorker' in navigator) {
+/*if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/service-worker.js')
         .then(swReg => {
             console.log('Service worker Registered')
@@ -10,7 +10,7 @@ if ('serviceWorker' in navigator) {
 }
 if (!('showNotification' in swReg.prototype)) {
     console.warn('Notifications aren\'t supported.');
-    return;
+    return 0;
 }
 if (Notification.permission === 'denied') {
     console.warn('The user has blocked notifications.');
@@ -18,8 +18,8 @@ if (Notification.permission === 'denied') {
 } if (!('PushManager' in window)) {
     console.warn('Push messaging isn\'t supported.');
     return;
-}
-/*if (typeof navigator.serviceWorker !== 'undefined') {
+}*/
+if (typeof navigator.serviceWorker !== 'undefined') {
     navigator.serviceWorker.register('js/sw.js')
         .then((registration) => {
             return registration.pushManager
@@ -71,7 +71,7 @@ if (Notification.permission === 'denied') {
             };
         })
         .catch(() => console.log('service worker not registered'))
-}*/
+}
 
 //Notifications ale chcemy Push
 /*Notification.requestPermission().then((result) => {
@@ -92,6 +92,12 @@ function randomNotification() {
     setTimeout(randomNotification, 30000);
 }*/
 /*const options = {
+
+//Lokalizacja
+
+
+
+
     'This is Message Body'
     //Here you can add more properties like icon, image, vibrate, etc.
 };
