@@ -134,6 +134,10 @@
                 alert("Twoja przeglądarka nie obsługuje geolokalizacji.");
             }
         }
+        var control = L.Routing.control({
+    routeWhileDragging: true,
+    show: false // Ukryj podpowiedzi trasy
+}).addTo(map);
     </script>
 </body>
 <footer>
