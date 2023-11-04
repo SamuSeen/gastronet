@@ -5,6 +5,16 @@ const VAPID_PUBLIC_KEY = 'BHKnEUIn2lpOowyM4DG9qv96Cxz-jaNHxmpxTw4XowvXxU4Wzl4ThS
 
 /* Push notification logic. */
 
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/service-worker.js')
+        .then(swReg => {
+            console.log('Service worker Registered')
+            updateUI();
+        });
+} else {
+    console.warn('Service workers aren\'t supported in this browser.');
+}
+
 async function registerServiceWorker() {
     await navigator.serviceWorker.register('./js/sw.js');
     updateUI();

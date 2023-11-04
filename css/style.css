@@ -136,3 +136,7 @@ h1 {
     bottom: -180px; /* Ustaw odległość od dolnej krawędzi ekranu (możesz dostosować) */
     right: -180px; /* Ustaw odległość od prawego brzegu ekranu (możesz dostosować) */
 }
+
+textarea {
+    width: 100%;
+}
