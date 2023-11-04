@@ -1,3 +1,5 @@
+
+
 //Service worker
 //trying to implement push notifications, again
 /*if ('serviceWorker' in navigator) {
