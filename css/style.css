@@ -99,11 +99,14 @@ button {
             font-size: 16px;
             cursor: pointer;
 }
-
 button:hover {
     background-color: #ff0000; /* Kolor tła po najechaniu myszką */
     transform: scale(1.05);
 }
+button:disabled{
+    background-color: #333;
+}
+
 h1 {
     font-size: 36px;
     color: #333;
