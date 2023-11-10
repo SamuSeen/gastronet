@@ -3,7 +3,13 @@ const VAPID_PUBLIC_KEY = 'BHKnEUIn2lpOowyM4DG9qv96Cxz-jaNHxmpxTw4XowvXxU4Wzl4ThS
 
 /* Push notification logic. */
 async function registerServiceWorker() {
-    await navigator.serviceWorker.register('./js/sw.js');
+    await navigator.serviceWorker.register('./sw.js')
+        .then(function (registration) {
+            console.log('Service Worker registered with scope:', registration.scope);
+        })
+        .catch(function (error) {
+            console.error('Service Worker registration failed:', error);
+        });
     updateUI();
 }
 
@@ -19,7 +25,14 @@ async function subscribeToPush() {
         userVisibleOnly: true,
         applicationServerKey: urlB64ToUint8Array(VAPID_PUBLIC_KEY)
     });
-    postToServer('/add-subscription', subscription);
+    try {
+        const responseData = await postToServer('/add-subscription', subscription);
+        console.log('Server response:', responseData);
+        // handle the response as needed
+    } catch (error) {
+        // handle the error, if needed
+        console.error('Failed to post to server:', error);
+    }
     updateUI();
 }
 
@@ -73,7 +86,12 @@ async function updateUI() {
         notificationStatus.textContent = "Push notification to this client isn't possible because of lack of service worker support.";
         return;
     }
-    const registration = await navigator.serviceWorker.getRegistration();
+    const registration = await navigator.serviceWorker.getRegistration(); 
+    if (registration) {
+        console.log('Service Worker is registered:', registration);
+    } else {
+        console.log('No Service Worker registration found.');
+    }
     // Service worker is available and now we need to register one.
     if (!registration) {
         registrationButton.disabled = false;
@@ -108,37 +126,47 @@ async function updateUI() {
 
 // Convert a base64 string to Uint8Array.
 // Must do this so the server can understand the VAPID_PUBLIC_KEY.
-const urlB64ToUint8Array = (base64String) => {
+function urlB64ToUint8Array(base64String) {
     const padding = '='.repeat((4 - base64String.length % 4) % 4);
     const base64 = (base64String + padding)
         .replace(/\-/g, '+')
         .replace(/_/g, '/');
-    const rawData = window.atob(base64);
-    const outputArray = new Uint8Array(rawData.length);
+    const rawData = atob(base64);
+    const buffer = new Uint8Array(rawData.length);
     for (let i = 0; i < rawData.length; ++i) {
-        outputArray[i] = rawData.charCodeAt(i);
+        buffer[i] = rawData.charCodeAt(i);
     }
-    return outputArray;
-};
+    return buffer;
+}
 
 async function postToServer(url, data) {
-    let response = await fetch(url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    });
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const responseData = await response.json();
+        return responseData;
+    } catch (error) {
+        console.error('Error posting to server:', error);
+        throw error; // rethrow the error to be caught by the caller if needed
+    }
 }
 
 window.onload = updateUI;
 
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('./js/sw.js')
+/*if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./sw.js')
         .then(swReg => {
             console.log('Service worker Registered')
             updateUI();
         });
 } else {
     console.warn('Service workers aren\'t supported in this browser.');
-}
+}*/
