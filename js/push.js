@@ -161,6 +161,7 @@ async function postToServer(url, data) {
 
 window.onload = updateUI;
 
+console.log('VAPID public key:', urlB64ToUint8Array(VAPID_PUBLIC_KEY));
 /*if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('./sw.js')
         .then(swReg => {
