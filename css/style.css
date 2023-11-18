@@ -92,7 +92,7 @@ button {
     display: inline-flex; /* Ustawienie przycisków obok siebie */
             padding: 5px 10px; /* Wielkość przycisków */
             margin: 0px; /* Odstęp między przyciskami */
-            background-color: #53AC2A; /* Kolor tła przycisku */
+            background-color: #76D34A; /* Kolor tła przycisku */
             color: #0C1906; /* Kolor tekstu na przycisku */
             border: none; /* Usunięcie obramowania */
             text-align: center; /* Wyśrodkowanie tekstu */
