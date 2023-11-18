@@ -68,7 +68,7 @@ const listener = app.listen(process.env.PORT, () => {
     console.log(`Listening on port ${listener.address().port}`);
 });
 
-const port = process.env.PORT || 3031;
+/*const port = process.env.PORT || 3031;
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
-});
+});*/
