@@ -13,6 +13,7 @@ const webpush = require('web-push');
 const bodyParser = require('body-parser');
 const Datastore = require('nedb');
 
+
 let db; // Declare db outside so it can be accessed globally
 
 // Use NeDB with synchronous initialization
@@ -77,7 +78,7 @@ const listener = app.listen(process.env.PORT, () => {
     console.log(`Listening on port ${listener.address().port}`);
 });
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 10000;
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
