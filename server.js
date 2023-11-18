@@ -69,6 +69,7 @@ const listener = app.listen(process.env.PORT, () => {
 });
 
 const port = process.env.PORT;
+console.log(`Assigned port is: ${port}`);
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
