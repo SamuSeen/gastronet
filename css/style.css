@@ -99,6 +99,8 @@ button {
             text-decoration: none;
             font-size: 16px;
             cursor: pointer;
+            border-radius: 5px;
+            
 }
 button:hover {
     background-color: #C7EDB5; /* Kolor tła po najechaniu myszką */
