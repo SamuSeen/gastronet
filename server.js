@@ -10,28 +10,42 @@ bhUUDJuXqGkT7ZNcFJJGi30BhIFyvI-326FW7sVV-QI
 =======================================*/
 const express = require('express');
 const webpush = require('web-push');
-const bodyparser = require('body-parser');
-const low = require('lowdb');
-const FileSync = require('lowdb/adapters/FileSync');
-const adapter = new FileSync('.data/db.json');
-const db = low(adapter);
+const bodyParser = require('body-parser');
+// Use dynamic import to import the lowdb library
+let lowdb; // Declare lowdb outside so it can be accessed globally
+let FileSync; // Declare FileSync outside so it can be accessed globally
+
+import('lowdb').then((module) => {
+    lowdb = module.default;
+    FileSync = lowdb.adapters.FileSync;
+
+    const adapter = new FileSync('.data/db.json');
+    const db = lowdb(adapter);
+
+    // Now you can use the 'db' object and other variables
+
+    // Initialize or perform operations on the db inside this block
+    db.defaults({
+        subscriptions: []
+    }).write();
+
+    // Additional code that relies on the 'db' object
+});
+
 const vapidDetails = {
     publicKey: process.env.VAPID_PUBLIC_KEY,
     privateKey: process.env.VAPID_PRIVATE_KEY,
     subject: process.env.VAPID_SUBJECT
 };
 
-db.defaults({
-    subscriptions: []
-}).write();
-
 function sendNotifications(subscriptions) {
     // TODO
 }
 
 const app = express();
-app.use(bodyparser.json());
+app.use(bodyParser.json());
 app.use(express.static('public'));
+
 
 app.post('/add-subscription', (request, response) => {
     const { subscription, vapidPublicKey } = req.body;
