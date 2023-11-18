@@ -78,7 +78,7 @@ const listener = app.listen(process.env.PORT, () => {
     console.log(`Listening on port ${listener.address().port}`);
 });
 
-const port = process.env.PORT || 10000;
+const port = process.env.PORT;
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
