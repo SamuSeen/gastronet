@@ -1,148 +1,147 @@
 body {
-    background-color: #E6F7DE;
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
+  background-color: #e6f7de;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
 header {
-    background-color: #76D34A;
-    padding: 20px;
-    }
+  background-color: #76d34a;
+  padding: 20px;
+}
 
 nav {
-    text-align: center;
-    margin-top: 20px;
+  text-align: center;
+  margin-top: 20px;
 }
 
 nav ul {
-    list-style-type: none;
-    padding: 0;
+  list-style-type: none;
+  padding: 0;
 }
 
 nav ul li {
-    display: inline;
-    margin: 0 10px;
+  display: inline;
+  margin: 0 10px;
 }
 
 .container {
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
 }
 
 .product {
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 20px;
-    margin: 10px;
-    width: 80%;
-    text-align: center;
-    box-sizing: border-box;
-    display: flex;
-    align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 20px;
+  margin: 10px;
+  width: 80%;
+  text-align: center;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
 }
 
 .product img {
-    width: 80px;
-    height: 80px;
-    object-fit: cover;
-    margin-right: 20px;
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  margin-right: 20px;
 }
 
 .product {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-    border: 1px solid #7a7a7a;
-    padding: 10px;
-    background-color: #C7EDB5;
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  border: 1px solid #7a7a7a;
+  padding: 10px;
+  background-color: #c7edb5;
 }
 
 .product div {
-    flex: 1;
+  flex: 1;
 }
 
 .product div h3 {
-    margin: 0;
+  margin: 0;
 }
 
 .product div p {
-    margin: 5px 0;
+  margin: 5px 0;
 }
 
 .product div button {
-    padding: 5px 10px;
-    background-color: #76D34A;
-    color: #0C1906;
-    border: none;
-    cursor: pointer;
+  padding: 5px 10px;
+  background-color: #76d34a;
+  color: #0c1906;
+  border: none;
+  cursor: pointer;
 }
 
 footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background-color: #76D34A;
-    color: #0C1906;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #76d34a;
+  color: #0c1906;
 }
 button {
-    display: inline-flex; /* Ustawienie przycisków obok siebie */
-            padding: 5px 10px; /* Wielkość przycisków */
-            margin: 0px; /* Odstęp między przyciskami */
-            background-color: #53AC2A; /* Kolor tła przycisku */
-            color: #0C1906; /* Kolor tekstu na przycisku */
-            border: none; /* Usunięcie obramowania */
-            text-align: center; /* Wyśrodkowanie tekstu */
-            text-decoration: none;
-            font-size: 16px;
-            cursor: pointer;
-            border-radius: 5px;
-            
+  display: inline-flex; /* Ustawienie przycisków obok siebie */
+  padding: 5px 10px; /* Wielkość przycisków */
+  margin: 0px; /* Odstęp między przyciskami */
+  background-color: #53ac2a; /* Kolor tła przycisku */
+  color: #0c1906; /* Kolor tekstu na przycisku */
+  border: none; /* Usunięcie obramowania */
+  text-align: center; /* Wyśrodkowanie tekstu */
+  text-decoration: none;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
 }
 button:hover {
-    background-color: #C7EDB5; /* Kolor tła po najechaniu myszką */
-    transform: scale(1.05);
+  background-color: #c7edb5; /* Kolor tła po najechaniu myszką */
+  transform: scale(1.05);
 }
-button:disabled{
-    background-color: #333;
+button:disabled {
+  background-color: #333;
 }
 
 h1 {
-    font-size: 36px;
-    color: #333;
-    font-family: "Lucida Handwriting", cursive ;
-    margin: 0;
-    padding: 0;
+  font-size: 36px;
+  color: #333;
+  font-family: "Lucida Handwriting", cursive;
+  margin: 0;
+  padding: 0;
 }
 .fixed-filters {
-    position: sticky;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background-color: #C7EDB5; /* Jeśli chcesz mieć tło sekcji filtrów */
-    z-index: 100; /* Ustala, że sekcja ma być na wierzchu innych elementów */
-    padding: 1px;
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #c7edb5; /* Jeśli chcesz mieć tło sekcji filtrów */
+  z-index: 100; /* Ustala, że sekcja ma być na wierzchu innych elementów */
+  padding: 1px;
 }
 .fixed-filters ul {
-    white-space: nowrap;
-    overflow-x: auto;
-    padding: 5px 0; /* D
+  white-space: nowrap;
+  overflow-x: auto;
+  padding: 5px 0; /* D
     odaj wypełnienie, aby oddzielić od góry i dołu */
 }
 .fixed-filters ul li {
-    display: inline-block;
-    margin-right: 10px; /* Dodaj margines między przyciskami (możesz dostosować) */
+  display: inline-block;
+  margin-right: 10px; /* Dodaj margines między przyciskami (możesz dostosować) */
 }
 .fixed-koszyk {
-    scale: 15%;
-    position: fixed;
-    bottom: -180px; /* Ustaw odległość od dolnej krawędzi ekranu (możesz dostosować) */
-    right: -180px; /* Ustaw odległość od prawego brzegu ekranu (możesz dostosować) */
+  scale: 15%;
+  position: fixed;
+  bottom: -180px; /* Ustaw odległość od dolnej krawędzi ekranu (możesz dostosować) */
+  right: -180px; /* Ustaw odległość od prawego brzegu ekranu (możesz dostosować) */
 }
 
 textarea {
-    width: 100%;
+  width: 100%;
 }
