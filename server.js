@@ -11,21 +11,14 @@ bhUUDJuXqGkT7ZNcFJJGi30BhIFyvI-326FW7sVV-QI
 const express = require('express');
 const webpush = require('web-push');
 const bodyParser = require('body-parser');
-const low = require('lowdb');
-const FileSync = require('lowdb/adapters/FileSync');
+const Datastore = require('nedb');
 
 let db; // Declare db outside so it can be accessed globally
 
-// Use lowdb with synchronous require
-const adapter = new FileSync('.data/db.json');
-db = low(adapter);
+// Use NeDB with synchronous initialization
+db = new Datastore({ filename: '.data/db.json', autoload: true });
 
 // Now you can use the 'db' object and other variables
-
-// Initialize or perform operations on the db inside this block
-db.defaults({
-    subscriptions: []
-}).write();
 
 // Additional code that relies on the 'db' object
 
@@ -43,15 +36,14 @@ const app = express();
 app.use(bodyParser.json());
 app.use(express.static('public'));
 
-
 app.post('/add-subscription', (request, response) => {
     const { subscription, vapidPublicKey } = req.body;
 
     // Check if the provided VAPID key matches the expected key
-    if (vapidPublicKey !== "BHKnEUIn2lpOowyM4DG9qv96Cxz-jaNHxmpxTw4XowvXxU4Wzl4ThSDCyljYeRyyVBWfJmRByMR5UY2UeuPBRV0") {
+    if (vapidPublicKey !== vapidDetails.publicKey) {
         return res.status(403).json({ error: 'Invalid VAPID public key.' });
     } else {
-        console.log("Valid VAPID public key")
+        console.log("Valid VAPID public key");
     }
 
     // Handle the subscription
