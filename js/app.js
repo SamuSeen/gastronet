@@ -1,4 +1,9 @@
-
+function showAllProducts() {
+    showProducts('all');
+}
+document.addEventListener('DOMContentLoaded', function () {
+    showAllProducts();
+});
 
 //Menu
 function loadXMLDoc(filename) {
