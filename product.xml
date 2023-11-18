@@ -3,7 +3,7 @@
     <category name="burgers">
         <product>
             <name>Classic Burger</name>
-            <description>Delicious classic burger</description>
+            <description>Bułka, 200g wołowiny, sałata, ogórek piklowany, pomidor, cebula cukrowa, clasic sos</description>
             <price>28.00</price>
             <image>burger1.jpg</image>
         </product>
@@ -26,7 +26,31 @@
             <image>burger4.jpg</image>
         </product>
         <product>
-            <name>Bacon Burger</name>
+            <name>Blue Cheese Burger</name>
+            <description>Burger with blue cheese</description>
+            <price>37.00</price>
+            <image>burger4.jpg</image>
+        </product>
+        <product>
+            <name>Whisky Burger</name>
+            <description>Burger with bacon slices</description>
+            <price>37.00</price>
+            <image>burger4.jpg</image>
+        </product>
+        <product>
+            <name> Beef Chilli Burger</name>
+            <description>Burger with bacon slices</description>
+            <price>37.00</price>
+            <image>burger4.jpg</image>
+        </product>
+        <product>
+            <name>Pulled Pork Burger</name>
+            <description>Burger with bacon slices</description>
+            <price>37.00</price>
+            <image>burger4.jpg</image>
+        </product>
+        <product>
+            <name>Double Burger</name>
             <description>Burger with bacon slices</description>
             <price>37.00</price>
             <image>burger4.jpg</image>
@@ -37,41 +61,6 @@
             <price>37.00</price>
             <image>burger4.jpg</image>
         </product>
-        <product>
-            <name>Bacon Burger</name>
-            <description>Burger with bacon slices</description>
-            <price>37.00</price>
-            <image>burger4.jpg</image>
-        </product>
-        <product>
-            <name>Bacon Burger</name>
-            <description>Burger with bacon slices</description>
-            <price>37.00</price>
-            <image>burger4.jpg</image>
-        </product>
-        <product>
-            <name>Bacon Burger</name>
-            <description>Burger with bacon slices</description>
-            <price>37.00</price>
-            <image>burger4.jpg</image>
-        </product>
-        <product>
-            <name>Bacon Burger</name>
-            <description>Burger with bacon slices</description>
-            <price>37.00</price>
-            <image>burger4.jpg</image>
-        </product>
-        <product>
-            <name>Bacon Burger</name>
-            <description>Burger with bacon slices</description>
-            <price>37.00</price>
-            <image>burger4.jpg</image>
-        </product>
-        <product>
-            <name>Bacon Burger</name>
-            <description>Burger with bacon slices</description>
-            <price>37.00</price>
-            <image>burger4.jpg</image>
         </product>
     </category>
     <category name="wraps">
