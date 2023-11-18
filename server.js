@@ -34,9 +34,19 @@ app.use(bodyparser.json());
 app.use(express.static('public'));
 
 app.post('/add-subscription', (request, response) => {
+    const { subscription, vapidPublicKey } = req.body;
+
+    // Check if the provided VAPID key matches the expected key
+    if (vapidPublicKey !== "BHKnEUIn2lpOowyM4DG9qv96Cxz-jaNHxmpxTw4XowvXxU4Wzl4ThSDCyljYeRyyVBWfJmRByMR5UY2UeuPBRV0") {
+        return res.status(403).json({ error: 'Invalid VAPID public key.' });
+    } else {
+        console.log("Valid VAPID public key")
+    }
+
+    // Handle the subscription
     console.log('/add-subscription');
     console.log(request.body);
-    response.sendStatus(200);
+    response.sendStatus(200).json({ success: true });
 });
 
 app.post('/remove-subscription', (request, response) => {
@@ -62,4 +72,9 @@ app.get('/', (request, response) => {
 
 const listener = app.listen(process.env.PORT, () => {
     console.log(`Listening on port ${listener.address().port}`);
+});
+
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
 });
