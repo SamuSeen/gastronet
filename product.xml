@@ -3,19 +3,19 @@
     <category name="burgers">
         <product>
             <name>Classic Burger</name>
-            <description>Bułka, 200g wołowiny, sałata, ogórek piklowany, pomidor, cebula cukrowa, clasic sos</description>
+            <description>Bułka brioche, 200g grilowanej wołowiny, sałata, ogórek piklowany, pomidor, cebula cukrowa, clasic sos</description>
             <price>28.00</price>
             <image>burger1.jpg</image>
         </product>
         <product>
             <name>Cheeseburger</name>
-            <description>Burger with melted cheese</description>
+            <description>Bułka brioche, 200g grilowanej wołowiny, sałata, Angielski ser chedar, pomidor, cebula cukrowa, ogórek piklowany,majonez</description>
             <price>30.00</price>
             <image>burger2.jpg</image>
         </product>
         <product>
             <name>Veggie Burger</name>
-            <description>Vegetarian burger</description>
+            <description>Bułka brioche, 200g ciecierzycy, sałata, pomidor, cebula cukrowa, ogórek piklowany, żurawina ,sos relish na bazie pomidorów i swieżych warzyw,</description>
             <price>31.00</price>
             <image>burger3.jpg</image>
         </product>
