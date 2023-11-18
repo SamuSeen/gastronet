@@ -9,19 +9,19 @@
         </product>
         <product>
             <name>Cheeseburger</name>
-            <description>Bułka brioche, 200g grilowanej wołowiny, sałata, Angielski ser chedar, pomidor, cebula cukrowa, ogórek piklowany,majonez</description>
+            <description>Bułka brioche, 200g grilowanej wołowiny, sałata, Angielski ser chedar, pomidor, cebula cukrowa, ogórek piklowany, majonez</description>
             <price>30.00</price>
             <image>burger2.jpg</image>
         </product>
         <product>
             <name>Veggie Burger</name>
-            <description>Bułka brioche, 200g ciecierzycy, sałata, pomidor, cebula cukrowa, ogórek piklowany, żurawina ,sos relish na bazie pomidorów i swieżych warzyw,</description>
+            <description>Bułka brioche, 200g ciecierzycy, sałata, pomidor, cebula cukrowa, ogórek piklowany, żurawina ,sos relish na bazie pomidorów i swieżych warzyw</description>
             <price>31.00</price>
             <image>burger3.jpg</image>
         </product>
         <product>
             <name>Bacon Burger</name>
-            <description>Burger with bacon slices</description>
+            <description>Bułka brioche, 200g grilowanej wołowiny, sałata, grilowany becon, Angielski ser chedar, pomidor, cebula cukrowa, ogórek piklowany, majonez, BBQ sos</description>
             <price>37.00</price>
             <image>burger4.jpg</image>
         </product>
