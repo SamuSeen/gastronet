@@ -6,6 +6,7 @@ Hosting na [~~https://cozy-daffodil-259645.netlify.app/~~](https://cozy-daffodil
 
 KOLORY: https://www.realtimecolors.com/?colors=0c1906-e6f7de-76d34a-c7edb5-53ac2a&fonts=Poppins-Poppins
 
+To powinno zrestartować serwer
 **!!! WARNING !!!**
 DEPLOY https://api.render.com/deploy/srv-clcaa0vuj6oc738k0nk0?key=BiLwmSom-DA
 **!!! WARNING !!!**

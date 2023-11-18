@@ -11,26 +11,23 @@ bhUUDJuXqGkT7ZNcFJJGi30BhIFyvI-326FW7sVV-QI
 const express = require('express');
 const webpush = require('web-push');
 const bodyParser = require('body-parser');
-// Use dynamic import to import the lowdb library
-let lowdb; // Declare lowdb outside so it can be accessed globally
-let FileSync; // Declare FileSync outside so it can be accessed globally
+const low = require('lowdb');
+const FileSync = require('lowdb/adapters/FileSync');
 
-import('lowdb').then((module) => {
-    lowdb = module.default;
-    FileSync = lowdb.adapters.FileSync;
+let db; // Declare db outside so it can be accessed globally
 
-    const adapter = new FileSync('.data/db.json');
-    const db = lowdb(adapter);
+// Use lowdb with synchronous require
+const adapter = new FileSync('.data/db.json');
+db = low(adapter);
 
-    // Now you can use the 'db' object and other variables
+// Now you can use the 'db' object and other variables
 
-    // Initialize or perform operations on the db inside this block
-    db.defaults({
-        subscriptions: []
-    }).write();
+// Initialize or perform operations on the db inside this block
+db.defaults({
+    subscriptions: []
+}).write();
 
-    // Additional code that relies on the 'db' object
-});
+// Additional code that relies on the 'db' object
 
 const vapidDetails = {
     publicKey: process.env.VAPID_PUBLIC_KEY,
