@@ -1,12 +1,12 @@
 body {
-    background-color: #e4e4f7;
+    background-color: #E6F7DE;
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
 }
 
 header {
-    background-color: #622B91;
+    background-color: #76D34A;
     padding: 20px;
     }
 
@@ -57,6 +57,7 @@ nav ul li {
     margin-bottom: 20px;
     border: 1px solid #7a7a7a;
     padding: 10px;
+    background-color: #C7EDB5;
 }
 
 .product div {
@@ -73,8 +74,8 @@ nav ul li {
 
 .product div button {
     padding: 5px 10px;
-    background-color: #f44336;
-    color: white;
+    background-color: #76D34A;
+    color: #0C1906;
     border: none;
     cursor: pointer;
 }
@@ -84,15 +85,15 @@ footer {
     bottom: 0;
     left: 0;
     width: 100%;
-    background-color: rgb(78, 11, 141);
-    color: #ffffff;
+    background-color: #76D34A;
+    color: #0C1906;
 }
 button {
     display: inline-flex; /* Ustawienie przycisków obok siebie */
             padding: 5px 10px; /* Wielkość przycisków */
             margin: 0px; /* Odstęp między przyciskami */
-            background-color: #ff0000; /* Kolor tła przycisku */
-            color: white; /* Kolor tekstu na przycisku */
+            background-color: #53AC2A; /* Kolor tła przycisku */
+            color: #0C1906; /* Kolor tekstu na przycisku */
             border: none; /* Usunięcie obramowania */
             text-align: center; /* Wyśrodkowanie tekstu */
             text-decoration: none;
@@ -100,7 +101,7 @@ button {
             cursor: pointer;
 }
 button:hover {
-    background-color: #ff0000; /* Kolor tła po najechaniu myszką */
+    background-color: #C7EDB5; /* Kolor tła po najechaniu myszką */
     transform: scale(1.05);
 }
 button:disabled{
@@ -119,7 +120,7 @@ h1 {
     top: 0;
     left: 0;
     width: 100%;
-    background-color: #acacac; /* Jeśli chcesz mieć tło sekcji filtrów */
+    background-color: #C7EDB5; /* Jeśli chcesz mieć tło sekcji filtrów */
     z-index: 100; /* Ustala, że sekcja ma być na wierzchu innych elementów */
     padding: 1px;
 }
