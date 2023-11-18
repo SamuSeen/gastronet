@@ -16,7 +16,7 @@
     "web-push": "^3.6.6"
   },
   "engines": {
-    "node": "8.15.1"
+    "node": "20.9.0"
   },
   "repository": {
     "url": "gastronet"
