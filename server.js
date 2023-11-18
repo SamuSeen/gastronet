@@ -1,13 +1,3 @@
-//VAPID keys
-/*=======================================
-
-Public Key:
-BHKnEUIn2lpOowyM4DG9qv96Cxz-jaNHxmpxTw4XowvXxU4Wzl4ThSDCyljYeRyyVBWfJmRByMR5UY2UeuPBRV0
-
-Private Key:
-bhUUDJuXqGkT7ZNcFJJGi30BhIFyvI-326FW7sVV-QI
-
-=======================================*/
 const express = require('express');
 const webpush = require('web-push');
 const bodyParser = require('body-parser');
