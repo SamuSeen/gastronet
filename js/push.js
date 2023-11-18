@@ -1,6 +1,21 @@
 //Service worker
 const VAPID_PUBLIC_KEY = 'BHKnEUIn2lpOowyM4DG9qv96Cxz-jaNHxmpxTw4XowvXxU4Wzl4ThSDCyljYeRyyVBWfJmRByMR5UY2UeuPBRV0';
 
+//Checks for notification permissions
+/*Notification.requestPermission()
+    .then(permission => { 
+        if (permission === 'granted') { 
+            console.log('Permission for notifications was granted'); } 
+        else { 
+            console.error('Permission for notifications was denied'); } 
+        });*/
+//show registered service workers
+/*navigator.serviceWorker.getRegistrations().then(registrations => {
+    console.log(registrations);
+});*/
+
+
+
 /* Push notification logic. */
 async function registerServiceWorker() {
     await navigator.serviceWorker.register('./js/sw.js');
@@ -52,6 +67,7 @@ async function notifyAll() {
 /* UI logic. */
 
 async function updateUI() {
+    console.log("updatingUI elements")
     const registrationButton = document.getElementById('register');
     const unregistrationButton = document.getElementById('unregister');
     const registrationStatus = document.getElementById('registration-status-message');
@@ -68,12 +84,14 @@ async function updateUI() {
     notifyMeButton.disabled = true;
     // Service worker is not supported so we can't go any further.
     if (!'serviceWorker' in navigator) {
+    //if (navigator.serviceWorker.getRegistrations() === undefined) {
         registrationStatus.textContent = "This browser doesn't support service workers.";
         subscriptionStatus.textContent = "Push subscription on this client isn't possible because of lack of service worker support.";
         notificationStatus.textContent = "Push notification to this client isn't possible because of lack of service worker support.";
         return;
     }
-    const registration = await navigator.serviceWorker.getRegistration();
+    const registration = await navigator.serviceWorker.getRegistration()
+        .then(registration => console.log(registration));
     // Service worker is available and now we need to register one.
     if (!registration) {
         registrationButton.disabled = false;
@@ -131,9 +149,9 @@ async function postToServer(url, data) {
     });
 }
 
-window.onload = updateUI;
+window.onload = registerServiceWorker;
 
-if ('serviceWorker' in navigator) {
+/*if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('./js/sw.js')
         .then(swReg => {
             console.log('Service worker Registered')
@@ -141,4 +159,4 @@ if ('serviceWorker' in navigator) {
         });
 } else {
     console.warn('Service workers aren\'t supported in this browser.');
-}
+}*/
