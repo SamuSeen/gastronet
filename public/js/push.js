@@ -35,7 +35,24 @@ async function unregisterServiceWorker() {
 }
 
 async function subscribeToPush() {
-    const registration = await navigator.serviceWorker.getRegistration();
+        const subscription = await registration.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: urlB64ToUint8Array(VAPID_PUBLIC_KEY)
+    });
+
+    try {
+        const responseData = await postToServer('/add-subscription', {
+            subscription,
+            vapidPublicKey: VAPID_PUBLIC_KEY
+        });
+        console.log('Server response:', responseData);
+        // handle the response as needed
+    } catch (error) {
+        // handle the error, if needed
+        console.error('Failed to post to server:', error);
+    updateUI();
+}
+    /*const registration = await navigator.serviceWorker.getRegistration();
     const subscription = await registration.pushManager.subscribe({
         userVisibleOnly: true,
         applicationServerKey: urlB64ToUint8Array(VAPID_PUBLIC_KEY)
@@ -48,7 +65,7 @@ async function subscribeToPush() {
         // handle the error, if needed
         console.error('Failed to post to server:', error);
     }
-    updateUI();
+    updateUI();*/
 }
 
 async function unsubscribeFromPush() {
