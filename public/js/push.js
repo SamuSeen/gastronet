@@ -35,7 +35,8 @@ async function unregisterServiceWorker() {
 }
 
 async function subscribeToPush() {
-        const subscription = await registration.pushManager.subscribe({
+    const registration = await navigator.serviceWorker.getRegistration();
+    const subscription = await registration.pushManager.subscribe({
         userVisibleOnly: true,
         applicationServerKey: urlB64ToUint8Array(VAPID_PUBLIC_KEY)
     });
