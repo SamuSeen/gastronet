@@ -1,6 +1,6 @@
 //Service worker
 const VAPID_PUBLIC_KEY = 'BHKnEUIn2lpOowyM4DG9qv96Cxz-jaNHxmpxTw4XowvXxU4Wzl4ThSDCyljYeRyyVBWfJmRByMR5UY2UeuPBRV0';
-
+//Regenerate VAPID keys
 //Checks for notification permissions
 /*Notification.requestPermission()
     .then(permission => { 
