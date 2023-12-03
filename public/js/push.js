@@ -1,5 +1,5 @@
 //Service worker
-const VAPID_PUBLIC_KEY = 'BHKnEUIn2lpOowyM4DG9qv96Cxz-jaNHxmpxTw4XowvXxU4Wzl4ThSDCyljYeRyyVBWfJmRByMR5UY2UeuPBRV0';
+const VAPID_PUBLIC_KEY = "BEPwmObE1GmKT4C5_EEff3QQQXZCFqe8vtlRv3dpT6zNK__7kKGV8VqNyf9Y8tf7rEM74iDLd5OAPNVKq_BlH5A";
 //Regenerate VAPID keys
 //Checks for notification permissions
 /*Notification.requestPermission()

@@ -17,10 +17,27 @@ db = new Datastore({ filename: '.data/db.json', autoload: true });
 const vapidDetails = {
     publicKey: process.env.VAPID_PUBLIC_KEY,
     privateKey: process.env.VAPID_PRIVATE_KEY,
+    GCMkey: process.env.GCM_KEY,
     subject: process.env.VAPID_SUBJECT
 };
 
+webpush.setGCMAPIKey(vapidDetails.GCMkey);
+webpush.setVapidDetails(
+  vapidDetails.publicKey,
+  vapidDetails.privateKey,
+  vapidDetails.subject
+);
+
+
 function sendNotifications(subscriptions) {
+    const pushSubscription = {
+      endpoint: ".....",
+      keys: {
+        auth: ".....",
+        p256dh: ".....",
+      },
+    };
+    webpush.sendNotification(pushSubscription, 'Your Push Payload Text');
     // TODO
 }
 
