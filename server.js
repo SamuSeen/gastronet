@@ -3,6 +3,7 @@ const webpush = require('web-push');
 const bodyParser = require('body-parser');
 const Datastore = require('nedb');
 const vapidKeys = webpush.generateVAPIDKeys();
+console.log(vapidKeys)
 
 let db; // Declare db outside so it can be accessed globally
 
