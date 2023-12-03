@@ -1,6 +1,6 @@
 //Service worker
 const VAPID_PUBLIC_KEY = 'BHKnEUIn2lpOowyM4DG9qv96Cxz-jaNHxmpxTw4XowvXxU4Wzl4ThSDCyljYeRyyVBWfJmRByMR5UY2UeuPBRV0';
-
+//Regenerate VAPID keys
 //Checks for notification permissions
 /*Notification.requestPermission()
     .then(permission => { 
@@ -40,6 +40,24 @@ async function subscribeToPush() {
         userVisibleOnly: true,
         applicationServerKey: urlB64ToUint8Array(VAPID_PUBLIC_KEY)
     });
+
+    try {
+        const responseData = await postToServer('/add-subscription', {
+            subscription,
+            vapidPublicKey: VAPID_PUBLIC_KEY
+        });
+        console.log('Server response:', responseData);
+        // handle the response as needed
+    } catch (error) {
+        // handle the error, if needed
+        console.error('Failed to post to server:', error);
+    updateUI();
+}
+    /*const registration = await navigator.serviceWorker.getRegistration();
+    const subscription = await registration.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: urlB64ToUint8Array(VAPID_PUBLIC_KEY)
+    });
     try {
         const responseData = await postToServer('/add-subscription', subscription);
         console.log('Server response:', responseData);
@@ -48,7 +66,7 @@ async function subscribeToPush() {
         // handle the error, if needed
         console.error('Failed to post to server:', error);
     }
-    updateUI();
+    updateUI();*/
 }
 
 async function unsubscribeFromPush() {
