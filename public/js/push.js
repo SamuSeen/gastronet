@@ -80,7 +80,6 @@ async function notifyAll() {
 /* UI logic. */
 
 async function updateUI() {
-    console.log("updatingUI elements")
     const registrationButton = document.getElementById('register');
     const unregistrationButton = document.getElementById('unregister');
     const registrationStatus = document.getElementById('registration-status-message');
@@ -104,11 +103,6 @@ async function updateUI() {
         return;
     }
     const registration = await navigator.serviceWorker.getRegistration(); 
-    if (registration) {
-        console.log('Service Worker is registered:', registration);
-    } else {
-        console.log('No Service Worker registration found.');
-    }
     // Service worker is available and now we need to register one.
     if (!registration) {
         registrationButton.disabled = false;
