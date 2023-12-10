@@ -52,7 +52,7 @@ function scheduleNotifications() {
                 return;
             }
             sendNotifications(payload, subscriptions);
-            response.sendStatus(200);
+            //response.sendStatus(200);
         });
     }, 60 * 1000); // 1000 milisekundy = 1sec
 }
@@ -78,7 +78,7 @@ app.post("/add-subscription", (request, response) => {
         return response.status(500).json({ error: "Internal Server Error." });
         }
         console.log("Subscription saved:", newDoc);
-        response.sendStatus(200).json({ success: true });
+        response.status(200).json({ success: true });
     });
 });
 
@@ -87,7 +87,7 @@ app.post("/add-subscription", (request, response) => {
 app.post('/remove-subscription', (request, response) => {
     console.log('/remove-subscription');
     console.log(request.body);
-    response.sendStatus(200);
+    response.status(200);
 });
 
 app.post("/notify-me", (request, response) => {
