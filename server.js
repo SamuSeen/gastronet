@@ -2,8 +2,8 @@ const express = require('express');
 const webpush = require('web-push');
 const bodyParser = require('body-parser');
 const Datastore = require('nedb');
-const vapidKeys = webpush.generateVAPIDKeys();
-console.log(vapidKeys)
+//const vapidKeys = webpush.generateVAPIDKeys();
+//console.log(vapidKeys)
 
 
 
