@@ -27,17 +27,35 @@ webpush.setVapidDetails(
 
 
 function sendNotifications(payload, subscriptions) {
-
-        //loop through each subscription and send a notification
-        subscriptions.forEach((subscriptionDoc) => {
+    //loop through each subscription and send a notification
+    subscriptions.forEach((subscriptionDoc) => {
         const pushSubscription = subscriptionDoc.subscription;
         webpush
-            .sendNotification(pushSubscription, JSON.stringify(payload))
-            .then(() => console.log("Notification sent successfully"))
-            .catch((err) => console.error("Error sending notification:", err));
-        });
+        .sendNotification(pushSubscription, JSON.stringify(payload))
+        .then(() => console.log("Notification sent successfully"))
+        .catch((err) => console.error("Error sending notification:", err));
+    });
 }
 
+//notification scheduler
+function scheduleNotifications() {
+    setInterval(() => {
+        const payload = {
+        title: "Scheduled Notification",
+        body: "This is a scheduled notification.",
+        };
+
+        //fetch all subscriptioons
+        db.find({}, (err, subscriptions) => {
+            if (err) {
+                console.error("Error fetching subscriptions:", err);
+                return;
+            }
+            sendNotifications(payload, subscriptions);
+            response.sendStatus(200);
+        });
+    }, 60 * 1000); // 1000 milisekundy = 1sec
+}
 
 const app = express();
 app.use(bodyParser.json());
@@ -113,26 +131,6 @@ app.post("/notify-all", (request, response) => {
 app.get('/', (request, response) => {
     response.sendFile(__dirname + '/views/index.html');
 });
-
-//notification scheduler
-function scheduleNotifications() {
-    setInterval(() => {
-        const payload = {
-        title: "Scheduled Notification",
-        body: "This is a scheduled notification.",
-        };
-
-        //fetch all subscriptioons
-        db.find({}, (err, subscriptions) => {
-            if (err) {
-                console.error("Error fetching subscriptions:", err);
-                return;
-            }
-            sendNotifications(payload, subscriptions);
-            response.sendStatus(200);
-        });
-    }, 60 * 1000); // 1000 milisekundy = 1sec
-}
 
 //listener
 const listener = app.listen(process.env.PORT, () => {

@@ -3,11 +3,11 @@ const VAPID_PUBLIC_KEY = "BEPwmObE1GmKT4C5_EEff3QQQXZCFqe8vtlRv3dpT6zNK__7kKGV8V
 //Regenerate VAPID keys
 //Checks for notification permissions
 /*Notification.requestPermission()
-    .then(permission => { 
-        if (permission === 'granted') { 
-            console.log('Permission for notifications was granted'); } 
-        else { 
-            console.error('Permission for notifications was denied'); } 
+    .then(permission => {
+        if (permission === 'granted') {
+            console.log('Permission for notifications was granted'); }
+        else {
+            console.error('Permission for notifications was denied'); }
         });*/
 //show registered service workers
 /*navigator.serviceWorker.getRegistrations().then(registrations => {
@@ -106,7 +106,6 @@ async function updateUI() {
     const subscriptionStatus = document.getElementById('subscription-status-message');
     const notifyMeButton = document.getElementById('notify-me');
     const notificationStatus = document.getElementById('notification-status-message');
-    // Disable all buttons by default.
     registrationButton.disabled = true;
     unregistrationButton.disabled = true;
     subscriptionButton.disabled = true;
@@ -153,8 +152,7 @@ async function updateUI() {
 
 /* Utility functions. */
 
-// Convert a base64 string to Uint8Array.
-// Must do this so the server can understand the VAPID_PUBLIC_KEY.
+//convert a base64 string to Uint8Array for server.
 function urlB64ToUint8Array(base64String) {
     const padding = '='.repeat((4 - base64String.length % 4) % 4);
     const base64 = (base64String + padding)
