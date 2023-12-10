@@ -7,10 +7,11 @@ const Datastore = require('nedb');
 
 
 
-//use NeDB with synchronous initialization
+//setting up NeDB with synchronous initialization
 let db;
 db = new Datastore({ filename: '.data/db.json', autoload: true });
 
+//setting up web-push keys
 const vapidDetails = {
     publicKey: process.env.VAPID_PUBLIC_KEY,
     privateKey: process.env.VAPID_PRIVATE_KEY,
@@ -27,7 +28,6 @@ webpush.setVapidDetails(
 
 
 function sendNotifications(payload, subscriptions) {
-    //loop through each subscription and send a notification
     subscriptions.forEach((subscriptionDoc) => {
         const pushSubscription = subscriptionDoc.subscription;
         webpush

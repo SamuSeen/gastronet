@@ -166,7 +166,8 @@ function urlB64ToUint8Array(base64String) {
     return buffer;
 }
 
-async function postToServer(url, data) {
+//send to server
+/*async function postToServer(url, data) {
     try {
         const response = await fetch(url, {
             method: 'POST',
@@ -182,6 +183,30 @@ async function postToServer(url, data) {
         return responseData;
     } catch (error) {
         console.error('Error posting to server:', error);
+        throw error; // rethrow the error to be caught by the caller if needed
+    }
+}*/
+async function postToServer(url, data) {
+    try {
+        const response = await fetch(url, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+        });
+
+        if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const responseText = await response.text();
+        console.log("Server response:", responseText);
+
+        const responseData = await response.json();
+        return responseData;
+    } catch (error) {
+        console.error("Error posting to server:", error);
         throw error; // rethrow the error to be caught by the caller if needed
     }
 }
