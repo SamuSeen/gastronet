@@ -20,9 +20,9 @@ const vapidDetails = {
 
 webpush.setGCMAPIKey(vapidDetails.GCMkey);
 webpush.setVapidDetails(
+    vapidDetails.subject,
     vapidDetails.publicKey,
-    vapidDetails.privateKey,
-    vapidDetails.subject
+    vapidDetails.privateKey
 );
 
 
