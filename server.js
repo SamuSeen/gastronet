@@ -54,7 +54,7 @@ function scheduleNotifications() {
             sendNotifications(payload, subscriptions);
             //response.sendStatus(200);
         });
-    }, 60 * 1000); // 1000 milisekundy = 1sec
+    }, 60 * 10000); // 1000 milisekundy = 1sec
 }
 
 const app = express();

@@ -29,8 +29,8 @@ workbox.routing.registerRoute(
 self.addEventListener("push", (event) => {
     const payload = event.data?.text() ?? "no payload";
     event.waitUntil(
-        self.registration.showNotification("ServiceWorker Cookbook", {
-            body: payload,
+        self.registration.showNotification({body: payload.title}, {
+            body: payload.body,
         }),
     );
 });
