@@ -14,19 +14,23 @@ workbox.routing.registerRoute(
     new workbox.strategies.CacheFirst()
 );
 
-self.addEventListener('push', (event) => {
+/*self.addEventListener('push', (event) => {
     let notification = event.data.json();
     self.registration.showNotification(
         notification.title,
         notification.options
     );
-});
+});*/
 
-/*self.addEventListener("push", (event) => {
+// payload = {
+//     body: "Service worker is now online",
+// };
+
+self.addEventListener("push", (event) => {
     const payload = event.data?.text() ?? "no payload";
     event.waitUntil(
         self.registration.showNotification("ServiceWorker Cookbook", {
             body: payload,
         }),
     );
-});*/
+});

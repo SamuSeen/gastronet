@@ -83,7 +83,7 @@ app.post("/add-subscription", (request, response) => {
 });
 
 
-
+//todo fix up client-side
 app.post('/remove-subscription', (request, response) => {
     console.log('/remove-subscription');
     console.log(request.body);
