@@ -27,13 +27,11 @@ workbox.routing.registerRoute(
 // };
 
 self.addEventListener("push", (event) => {
-    const payload = event.data?.text() ?? "no payload";
+    const payload = event.data ?? "no payload";
     event.waitUntil(
-    self.registration.showNotification(payload.title, {
-        body: payload.body,
-        icon: "./icons/favicon.ico",
-        vibrate: [200, 100, 200, 100, 200, 100, 200],
-        tag: "vibration-sample",
-    })
+        self.registration.showNotification(payload.title, {
+            body: payload.body,
+            icon: "./icons/favicon.ico"
+        })
     );
 });
