@@ -1,20 +1,26 @@
 //Service worker
-const VAPID_PUBLIC_KEY = 'BHKnEUIn2lpOowyM4DG9qv96Cxz-jaNHxmpxTw4XowvXxU4Wzl4ThSDCyljYeRyyVBWfJmRByMR5UY2UeuPBRV0';
-
+const VAPID_PUBLIC_KEY = "BCPYdPfs5I-sK0ePZb1NYkb59WMD9bl2WDufHmqBgT9Bppkdnrt7fnQKt8sThE-WJeSf8BHTIgmmKh7ysqn-mvk";
+//Regenerate VAPID keys
 //Checks for notification permissions
 /*Notification.requestPermission()
-    .then(permission => { 
-        if (permission === 'granted') { 
-            console.log('Permission for notifications was granted'); } 
-        else { 
-            console.error('Permission for notifications was denied'); } 
+    .then(permission => {
+        if (permission === 'granted') {
+            console.log('Permission for notifications was granted'); }
+        else {
+            console.error('Permission for notifications was denied'); }
         });*/
 //show registered service workers
 /*navigator.serviceWorker.getRegistrations().then(registrations => {
     console.log(registrations);
 });*/
 
+function registerUser() {
+    setCookie("uid",document.getElementById("uidText").value,30);
+}
 
+function removeUser(params) {
+    removeCookie(document.getElementById("uidText").value)
+}
 
 /* Push notification logic. */
 async function registerServiceWorker() {
@@ -40,6 +46,25 @@ async function subscribeToPush() {
         userVisibleOnly: true,
         applicationServerKey: urlB64ToUint8Array(VAPID_PUBLIC_KEY)
     });
+
+    try {
+        const responseData = await postToServer('/add-subscription', {
+            uid: document.getElementById("uidText").value,
+            subscription,
+            vapidPublicKey: VAPID_PUBLIC_KEY
+        });
+        console.log('Server response:', responseData);
+        // handle the response as needed
+    } catch (error) {
+        // handle the error, if needed
+        console.error('Failed to post to server:', error);
+    updateUI();
+}
+    /*const registration = await navigator.serviceWorker.getRegistration();
+    const subscription = await registration.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: urlB64ToUint8Array(VAPID_PUBLIC_KEY)
+    });
     try {
         const responseData = await postToServer('/add-subscription', subscription);
         console.log('Server response:', responseData);
@@ -48,7 +73,7 @@ async function subscribeToPush() {
         // handle the error, if needed
         console.error('Failed to post to server:', error);
     }
-    updateUI();
+    updateUI();*/
 }
 
 async function unsubscribeFromPush() {
@@ -80,7 +105,9 @@ async function notifyAll() {
 /* UI logic. */
 
 async function updateUI() {
-    console.log("updatingUI elements")
+    const loginButton = document.getElementById('login');
+    const logoutButton = document.getElementById('logout');
+    const uidField = document.getElementById('uidText');
     const registrationButton = document.getElementById('register');
     const unregistrationButton = document.getElementById('unregister');
     const registrationStatus = document.getElementById('registration-status-message');
@@ -89,12 +116,25 @@ async function updateUI() {
     const subscriptionStatus = document.getElementById('subscription-status-message');
     const notifyMeButton = document.getElementById('notify-me');
     const notificationStatus = document.getElementById('notification-status-message');
-    // Disable all buttons by default.
+// Disable all buttons by default.
     registrationButton.disabled = true;
     unregistrationButton.disabled = true;
     subscriptionButton.disabled = true;
     unsubscriptionButton.disabled = true;
     notifyMeButton.disabled = true;
+    loginButton.disabled = true;
+    logoutButton.disabled = true;
+    uidField.disabled = true;
+    //check if user is set
+    if (getCookie("uid"==null)){
+        loginButton.disabled = false;
+        logoutButton.disabled = true;
+        uidField.disabled = false;
+    } else {
+        loginButton.disabled = true;
+        logoutButton.disabled = false;
+        uidField.disabled = true;
+    }
     // Service worker is not supported so we can't go any further.
     if (!'serviceWorker' in navigator) {
     //if (navigator.serviceWorker.getRegistrations() === undefined) {
@@ -104,11 +144,6 @@ async function updateUI() {
         return;
     }
     const registration = await navigator.serviceWorker.getRegistration(); 
-    if (registration) {
-        console.log('Service Worker is registered:', registration);
-    } else {
-        console.log('No Service Worker registration found.');
-    }
     // Service worker is available and now we need to register one.
     if (!registration) {
         registrationButton.disabled = false;
@@ -141,8 +176,7 @@ async function updateUI() {
 
 /* Utility functions. */
 
-// Convert a base64 string to Uint8Array.
-// Must do this so the server can understand the VAPID_PUBLIC_KEY.
+//convert a base64 string to Uint8Array for server.
 function urlB64ToUint8Array(base64String) {
     const padding = '='.repeat((4 - base64String.length % 4) % 4);
     const base64 = (base64String + padding)
@@ -156,7 +190,8 @@ function urlB64ToUint8Array(base64String) {
     return buffer;
 }
 
-async function postToServer(url, data) {
+//send to server
+/*async function postToServer(url, data) {
     try {
         const response = await fetch(url, {
             method: 'POST',
@@ -174,11 +209,35 @@ async function postToServer(url, data) {
         console.error('Error posting to server:', error);
         throw error; // rethrow the error to be caught by the caller if needed
     }
+}*/
+async function postToServer(url, data) {
+    try {
+        const response = await fetch(url, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+        });
+
+        if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const responseText = await response.text();
+        console.log("Server response:", responseText);
+
+        const responseData = await response.json();
+        return responseData;
+    } catch (error) {
+        console.error("Error posting to server:", error);
+        throw error; // rethrow the error to be caught by the caller if needed
+    }
 }
 
 window.onload = registerServiceWorker;
 
-console.log('VAPID public key:', urlB64ToUint8Array(VAPID_PUBLIC_KEY));
+//console.log('VAPID public key:', urlB64ToUint8Array(VAPID_PUBLIC_KEY));
 /*if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('./sw.js')
         .then(swReg => {

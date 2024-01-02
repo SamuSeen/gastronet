@@ -62,7 +62,7 @@ app.use(bodyParser.json());
 app.use(express.static('public'));
 
 app.post("/add-subscription", (request, response) => {
-    const { userId, subscription, vapidPublicKey } = request.body;
+    const { uid, subscription, vapidPublicKey } = request.body;
 
     //check if the provided VAPID key matches the expected key
     if (vapidPublicKey !== vapidDetails.publicKey) {
@@ -72,7 +72,7 @@ app.post("/add-subscription", (request, response) => {
     }
 
     //store the subscription in the database with the user identifier
-    db.insert({ userId, subscription }, (err, newDoc) => {
+    db.insert({ uid, subscription }, (err, newDoc) => {
         if (err) {
         console.error("Error saving subscription:", err);
         return response.status(500).json({ error: "Internal Server Error." });
@@ -92,14 +92,14 @@ app.post('/remove-subscription', (request, response) => {
 
 app.post("/notify-me", (request, response) => {
     console.log("/notify-me");
-    const { userId } = request.body;
+    const { uid } = request.body;
     const payload = {
         title: "Notification for Me",
         body: "This is a personalized notification.",
     };
 
     //find subscriptions for the specified user
-    db.find({ userId }, (err, subscriptions) => {
+    db.find({ uid }, (err, subscriptions) => {
         if (err) {
         console.error("Error fetching subscriptions:", err);
         return response.status(500).json({ error: "Internal Server Error." });
