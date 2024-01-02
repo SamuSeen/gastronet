@@ -16,10 +16,12 @@ const VAPID_PUBLIC_KEY = "BCPYdPfs5I-sK0ePZb1NYkb59WMD9bl2WDufHmqBgT9Bppkdnrt7fn
 
 function registerUser() {
     setCookie("uid",document.getElementById("uidText").value,30);
+    updateUI();
 }
 
 function removeUser(params) {
     removeCookie(document.getElementById("uidText").value)
+    updateUI();
 }
 
 /* Push notification logic. */
@@ -134,6 +136,7 @@ async function updateUI() {
         loginButton.disabled = true;
         logoutButton.disabled = false;
         uidField.disabled = true;
+        uidField.value = getCookie("uid")
     }
     // Service worker is not supported so we can't go any further.
     if (!'serviceWorker' in navigator) {
