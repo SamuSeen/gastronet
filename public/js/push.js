@@ -14,7 +14,15 @@ const VAPID_PUBLIC_KEY = "BCPYdPfs5I-sK0ePZb1NYkb59WMD9bl2WDufHmqBgT9Bppkdnrt7fn
     console.log(registrations);
 });*/
 
+function registerUser() {
+    setCookie("uid",document.getElementById("uidText").value,30);
+    updateUI();
+}
 
+function removeUser(params) {
+    removeCookie(document.getElementById("uidText").value)
+    updateUI();
+}
 
 /* Push notification logic. */
 async function registerServiceWorker() {
@@ -43,6 +51,7 @@ async function subscribeToPush() {
 
     try {
         const responseData = await postToServer('/add-subscription', {
+            uid: document.getElementById("uidText").value,
             subscription,
             vapidPublicKey: VAPID_PUBLIC_KEY
         });
@@ -98,6 +107,9 @@ async function notifyAll() {
 /* UI logic. */
 
 async function updateUI() {
+    const loginButton = document.getElementById('login');
+    const logoutButton = document.getElementById('logout');
+    const uidField = document.getElementById('uidText');
     const registrationButton = document.getElementById('register');
     const unregistrationButton = document.getElementById('unregister');
     const registrationStatus = document.getElementById('registration-status-message');
@@ -106,11 +118,26 @@ async function updateUI() {
     const subscriptionStatus = document.getElementById('subscription-status-message');
     const notifyMeButton = document.getElementById('notify-me');
     const notificationStatus = document.getElementById('notification-status-message');
+// Disable all buttons by default.
     registrationButton.disabled = true;
     unregistrationButton.disabled = true;
     subscriptionButton.disabled = true;
     unsubscriptionButton.disabled = true;
     notifyMeButton.disabled = true;
+    loginButton.disabled = true;
+    logoutButton.disabled = true;
+    uidField.disabled = true;
+    //check if user is set
+    if (getCookie("uid"==null)){
+        loginButton.disabled = false;
+        logoutButton.disabled = true;
+        uidField.disabled = false;
+    } else {
+        loginButton.disabled = true;
+        logoutButton.disabled = false;
+        uidField.disabled = true;
+        uidField.value = getCookie("uid")
+    }
     // Service worker is not supported so we can't go any further.
     if (!'serviceWorker' in navigator) {
     //if (navigator.serviceWorker.getRegistrations() === undefined) {
