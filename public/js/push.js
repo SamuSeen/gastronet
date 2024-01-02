@@ -128,7 +128,7 @@ async function updateUI() {
     logoutButton.disabled = true;
     uidField.disabled = true;
     //check if user is set
-    if (getCookie("uid"==null)){
+    if (getCookie("uid"!=null)){
         loginButton.disabled = false;
         logoutButton.disabled = true;
         uidField.disabled = false;
