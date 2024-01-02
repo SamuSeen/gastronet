@@ -1,45 +1,60 @@
-//VAPID keys
-/*=======================================
-
-Public Key:
-BHKnEUIn2lpOowyM4DG9qv96Cxz-jaNHxmpxTw4XowvXxU4Wzl4ThSDCyljYeRyyVBWfJmRByMR5UY2UeuPBRV0
-
-Private Key:
-bhUUDJuXqGkT7ZNcFJJGi30BhIFyvI-326FW7sVV-QI
-
-=======================================*/
 const express = require('express');
 const webpush = require('web-push');
 const bodyParser = require('body-parser');
-// Use dynamic import to import the lowdb library
-let lowdb; // Declare lowdb outside so it can be accessed globally
-let FileSync; // Declare FileSync outside so it can be accessed globally
+const Datastore = require('nedb');
+//const vapidKeys = webpush.generateVAPIDKeys();
+//console.log(vapidKeys)
 
-import('lowdb').then((module) => {
-    lowdb = module.default;
-    FileSync = lowdb.adapters.FileSync;
 
-    const adapter = new FileSync('.data/db.json');
-    const db = lowdb(adapter);
 
-    // Now you can use the 'db' object and other variables
+//setting up NeDB with synchronous initialization
+let db;
+db = new Datastore({ filename: '.data/db.json', autoload: true });
 
-    // Initialize or perform operations on the db inside this block
-    db.defaults({
-        subscriptions: []
-    }).write();
-
-    // Additional code that relies on the 'db' object
-});
-
+//setting up web-push keys
 const vapidDetails = {
     publicKey: process.env.VAPID_PUBLIC_KEY,
     privateKey: process.env.VAPID_PRIVATE_KEY,
+    GCMkey: process.env.GCM_KEY,
     subject: process.env.VAPID_SUBJECT
 };
 
-function sendNotifications(subscriptions) {
-    // TODO
+webpush.setGCMAPIKey(vapidDetails.GCMkey);
+webpush.setVapidDetails(
+    vapidDetails.subject,
+    vapidDetails.publicKey,
+    vapidDetails.privateKey
+);
+
+
+function sendNotifications(payload, subscriptions) {
+    subscriptions.forEach((subscriptionDoc) => {
+        const pushSubscription = subscriptionDoc.subscription;
+        webpush
+        .sendNotification(pushSubscription, JSON.stringify(payload))
+        .then(() => console.log("Notification sent successfully"))
+        .catch((err) => console.error("Error sending notification:", err));
+    });
+}
+
+//notification scheduler
+function scheduleNotifications() {
+    setInterval(() => {
+        const payload = {
+        title: "Scheduled Notification",
+        body: "This is a scheduled notification.",
+        };
+
+        //fetch all subscriptioons
+        db.find({}, (err, subscriptions) => {
+            if (err) {
+                console.error("Error fetching subscriptions:", err);
+                return;
+            }
+            sendNotifications(payload, subscriptions);
+            //response.sendStatus(200);
+        });
+    }, 60 * 10000); // 1000 milisekundy = 1sec
 }
 
 const app = express();
@@ -49,11 +64,11 @@ app.use(express.static('public'));
 app.post("/add-subscription", (request, response) => {
     const { uid, subscription, vapidPublicKey } = request.body;
 
-    // Check if the provided VAPID key matches the expected key
-    if (vapidPublicKey !== "BHKnEUIn2lpOowyM4DG9qv96Cxz-jaNHxmpxTw4XowvXxU4Wzl4ThSDCyljYeRyyVBWfJmRByMR5UY2UeuPBRV0") {
-        return res.status(403).json({ error: 'Invalid VAPID public key.' });
+    //check if the provided VAPID key matches the expected key
+    if (vapidPublicKey !== vapidDetails.publicKey) {
+        return response.status(403).json({ error: "Invalid VAPID public key." });
     } else {
-        console.log("Valid VAPID public key")
+        console.log("Valid VAPID public key");
     }
 
     //store the subscription in the database with the user identifier
@@ -73,7 +88,7 @@ app.post("/add-subscription", (request, response) => {
 app.post('/remove-subscription', (request, response) => {
     console.log('/remove-subscription');
     console.log(request.body);
-    response.sendStatus(200);
+    response.status(200);
 });
 
 app.post("/notify-me", (request, response) => {
@@ -97,20 +112,35 @@ app.post("/notify-me", (request, response) => {
     });
 });
 
-app.post('/notify-all', (request, response) => {
-    console.log('/notify-all');
-    response.sendStatus(200);
+app.post("/notify-all", (request, response) => {
+    console.log("/notify-all");
+    const payload = {
+        title: "Global Notification",
+        body: "This is a notification for everyone.",
+    };
+    //fetch all subscriptions from the database
+    db.find({}, (err, subscriptions) => {
+        if (err) {
+            console.error("Error fetching subscriptions:", err);
+            return;
+        }
+        sendNotifications(payload, subscriptions);
+        response.sendStatus(200);
+    });
 });
 
 app.get('/', (request, response) => {
     response.sendFile(__dirname + '/views/index.html');
 });
 
+//listener
 const listener = app.listen(process.env.PORT, () => {
     console.log(`Listening on port ${listener.address().port}`);
+    scheduleNotifications();
 });
 
-const port = process.env.PORT || 3000;
+/*const port = process.env.PORT || 3031;
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
-});
+});*/
+
