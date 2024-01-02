@@ -146,7 +146,7 @@ async function updateUI() {
         notificationStatus.textContent = "Push notification to this client isn't possible because of lack of service worker support.";
         return;
     }
-    const registration = await navigator.serviceWorker.getRegistration(); 
+    const registration = await navigator.serviceWorker.getRegistration();
     // Service worker is available and now we need to register one.
     if (!registration) {
         registrationButton.disabled = false;
