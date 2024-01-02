@@ -101,8 +101,8 @@ app.post("/notify-me", (request, response) => {
     //find subscriptions for the specified user
     db.find({ userId }, (err, subscriptions) => {
         if (err) {
-        console.error("Error fetching subscriptions:", err);
-        return response.status(500).json({ error: "Internal Server Error." });
+            console.error("Error fetching subscriptions:", err);
+            return response.status(500).json({ error: "Internal Server Error." });
         }
 
         //send notifications to the user subscriptions
@@ -117,14 +117,15 @@ app.post("/notify-all", (request, response) => {
         title: "Global Notification",
         body: "This is a notification for everyone.",
     };
-    //fetch all subscriptions from the database
+
+    //fetch all subscriptioons
     db.find({}, (err, subscriptions) => {
         if (err) {
             console.error("Error fetching subscriptions:", err);
             return;
         }
         sendNotifications(payload, subscriptions);
-        response.sendStatus(200);
+        //response.sendStatus(200);
     });
 });
 
