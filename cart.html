@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Shopping Cart</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header>
+    <h1>Gastro.Net - Shopping Cart</h1>
+    <nav>
+        <ul>
+            <li><a href="./index.html">Kontynuuj zamawianie</a></li>
+        </ul>
+    </nav>
+</header>
+
+<div class="container" id="cart-products">
+    <!-- Tutaj będą dodane zakupione produkty -->
+</div>
+
+<footer>
+    &copy; GastroNet 2024 | Wszelkie prawa zastrzeżone. v0.003
+</footer>
+
+<script src="js/app.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        showCartProducts();
+    });
+
+    function showCartProducts() {
+        const cartProductsContainer = document.getElementById('cart-products');
+        let cartProductsHTML = '';
+
+        // Pobierz informacje o produktach w koszyku z localStorage
+        const cartProducts = JSON.parse(localStorage.getItem('cartProducts')) || [];
+
+        for (let i = 0; i < cartProducts.length; i++) {
+            const name = cartProducts[i].name;
+            const description = cartProducts[i].description;
+            const price = cartProducts[i].price;
+            const image = cartProducts[i].image;
+
+            cartProductsHTML += `
+                <div class="product">
+                    <img src="images/${image}" alt="${name}">
+                    <div>
+                        <h3>${name}</h3>
+                        <p>Description: ${description}</p>
+                        <p>Price: ${price} PLN</p>
+                        <button onclick="removeFromCart(${i})">Usuń z koszyka</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        cartProductsContainer.innerHTML = cartProductsHTML;
+    }
+
+    // Dodaj tę funkcję do obsługi usuwania produktów z koszyka
+    function removeFromCart(index) {
+        // Pobierz aktualny stan koszyka z localStorage
+        const cartProducts = JSON.parse(localStorage.getItem('cartProducts')) || [];
+
+        // Usuń produkt z koszyka na podstawie indeksu
+        cartProducts.splice(index, 1);
+
+        // Zapisz zaktualizowany koszyk z powrotem do localStorage
+        localStorage.setItem('cartProducts', JSON.stringify(cartProducts));
+
+        // Ponownie wyświetl produkty w koszyku
+        showCartProducts();
+    }
+</script>
+<div id="endorder-button">
+    <a href="endorder.html">
+        <img src="images\625231.png" alt="Cart" />
+    </a>
+</div>
+
+</body>
+</html>

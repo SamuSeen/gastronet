@@ -146,3 +146,30 @@ h1 {
 textarea {
     width: 100%;
 }
+#cart-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 999;
+}
+
+#cart-button img {
+    width: 50px;
+    height: auto;
+}
+
+#endorder-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 999;
+}
+
+#endorder-button img {
+    width: 50px;
+    height: auto;
+}
+#cart-products .product button {
+    background-color: #ff0000; /* Kolor tła przycisku */
+    color: #ffffff; /* Kolor tekstu przycisku */
+}
