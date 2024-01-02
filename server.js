@@ -84,6 +84,7 @@ app.post("/add-subscription", (request, response) => {
 
 
 //todo fix up client-side
+//wait, what actually does this do?
 app.post('/remove-subscription', (request, response) => {
     console.log('/remove-subscription');
     console.log(request.body);
