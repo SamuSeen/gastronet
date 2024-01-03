@@ -129,14 +129,15 @@ app.post("/notify-all", (request, response) => {
         title: "Global Notification",
         body: "This is a notification for everyone.",
     };
-    //fetch all subscriptions from the database
+
+    //fetch all subscriptioons
     db.find({}, (err, subscriptions) => {
         if (err) {
             console.error("Error fetching subscriptions:", err);
             return;
         }
         sendNotifications(payload, subscriptions);
-        response.sendStatus(200);
+        //response.sendStatus(200);
     });
 });
 
