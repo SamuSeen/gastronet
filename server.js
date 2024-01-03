@@ -77,8 +77,9 @@ app.post("/add-subscription", (request, response) => {
         console.error("Error saving subscription:", err);
         return response.status(500).json({ error: "Internal Server Error." });
         }
-        console.log("Subscription saved:", newDoc);
-        response.status(200).json({ success: true });
+        //console.log("Subscription saved:", newDoc);
+        console.log("Subscription saved: ", uid);
+        response.status(201).json({ success: true });
     });
 });
 
@@ -86,9 +87,19 @@ app.post("/add-subscription", (request, response) => {
 //todo fix up client-side
 //wait, what actually does this do?
 app.post('/remove-subscription', (request, response) => {
-    console.log('/remove-subscription');
-    console.log(request.body);
-    response.status(200);
+    //console.log('/remove-subscription');
+    //console.log(request.body);
+    const { subscription } = request.body
+    db.remove({subscription},{},function (err, numRemoved) {
+        if (err) {
+            console.error("Error fetching subscriptions:", err);
+            return response.status(500).json({ error: "Internal Server Error." });
+        }
+        if (numRemoved>0) {
+            return response.status(200);
+        }
+    });
+    return response.status(400);
 });
 
 app.post("/notify-me", (request, response) => {
@@ -102,8 +113,8 @@ app.post("/notify-me", (request, response) => {
     //find subscriptions for the specified user
     db.find({ uid }, (err, subscriptions) => {
         if (err) {
-        console.error("Error fetching subscriptions:", err);
-        return response.status(500).json({ error: "Internal Server Error." });
+            console.error("Error fetching subscriptions:", err);
+            return response.status(500).json({ error: "Internal Server Error." });
         }
 
         //send notifications to the user subscriptions

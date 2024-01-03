@@ -14,13 +14,18 @@ const VAPID_PUBLIC_KEY = "BCPYdPfs5I-sK0ePZb1NYkb59WMD9bl2WDufHmqBgT9Bppkdnrt7fn
     console.log(registrations);
 });*/
 
+/**
+ * Does all the steps of user registration
+ */
 function registerUser() {
     setCookie("uid",document.getElementById("uidText").value,30);
+    subscribeToPush();
     updateUI();
 }
 
-function removeUser(params) {
-    removeCookie(document.getElementById("uidText").value)
+function removeUser() {
+    removeCookie("uid");
+    unsubscribeFromPush();
     updateUI();
 }
 
@@ -83,6 +88,7 @@ async function unsubscribeFromPush() {
     const subscription = await registration.pushManager.getSubscription();
     postToServer('/remove-subscription', {
         endpoint: subscription.endpoint
+        //uid: getCookie("uid")
     });
     await subscription.unsubscribe();
     updateUI();
@@ -124,11 +130,11 @@ async function updateUI() {
     subscriptionButton.disabled = true;
     unsubscriptionButton.disabled = true;
     notifyMeButton.disabled = true;
-    loginButton.disabled = true;
-    logoutButton.disabled = true;
-    uidField.disabled = true;
+    // loginButton.disabled = false;
+    // logoutButton.disabled = true;
+    // uidField.disabled = true;
     //check if user is set
-    if (getCookie("uid"==null)){
+    if (getCookie("uid")==null){
         loginButton.disabled = false;
         logoutButton.disabled = true;
         uidField.disabled = false;
