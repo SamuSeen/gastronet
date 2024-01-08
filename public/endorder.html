@@ -52,7 +52,7 @@
     <h1 href="./mail.html">Gastro.Net</h1>
     <nav>
         <ul>
-            <li><a href="./cart.html">Powrót do koszyka</a></li>
+            <li><a href="./cart.html">Back to cart</a></li>
             <li><a href="#">Login</a></li>
             <li><a href="#">Register</a></li>
             <li><a href="endorder.html">Contact</a></li>
@@ -65,11 +65,10 @@
     <div id="map"></div>
     <div id="sidePanel">
         <h2>Twoje zamówienie:</h2>
-        <p>Tutaj pojawi się Twoje zamówienie.</p>
+        <div id="cart-products"></div>
     </div>
     <div id="diadr">
-        <h2>Wpisz Adres Dostawy</h2>
-        <p>Poniżej podaj adres dostawy</p>
+        <h2>Poniżej wpisz Adres Dostawy</h2>
     </div>
     <form id="routeForm">
         <input type="text" id="city" placeholder="Miejscowość">
@@ -139,6 +138,34 @@
     routeWhileDragging: true,
     show: false // Ukryj podpowiedzi trasy
 }).addTo(map);
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            showCartProducts();
+        });
+
+        function showCartProducts() {
+            const cartProductsContainer = document.getElementById('cart-products');
+            let cartProductsHTML = '';
+            let totalAmount = 0;
+
+            // Pobierz informacje o produktach w koszyku z localStorage
+            const cartProducts = JSON.parse(localStorage.getItem('cartProducts')) || [];
+
+            for (let i = 0; i < cartProducts.length; i++) {
+                const name = cartProducts[i].name;
+                const price = cartProducts[i].price;
+
+                cartProductsHTML += `${name} - ${price} PLN<br>`;
+
+                totalAmount += parseFloat(price);
+            }
+
+            // Dodaj ostatnią linię z łączną kwotą zamówienia
+            cartProductsHTML += `<br>Za łączną kwotę: ${totalAmount.toFixed(2)} PLN`;
+
+            cartProductsContainer.innerHTML = cartProductsHTML;
+        }
     </script>
 </body>
 <footer>
