@@ -86,7 +86,7 @@ function showProducts(category) {
                         <h3>${name}</h3>
                         <p>Description: ${description}</p>
                         <p>Price: ${price} PLN</p>
-                        <button onclick="addToCart('${name}', '${description}', '${price}', '${image}')">Dodaj do koszyka</button>
+                        <button onclick="addToCart('${name}', '${description}', '${price}', '${image}')">Add to cart</button>
                     </div>
                 </div>
             `;
