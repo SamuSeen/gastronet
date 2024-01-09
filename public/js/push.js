@@ -97,7 +97,9 @@ async function unsubscribeFromPush() {
 async function notifyMe() {
     const registration = await navigator.serviceWorker.getRegistration();
     const subscription = await registration.pushManager.getSubscription();
-    postToServer('/notify-me', { endpoint: subscription.endpoint });
+    //postToServer('/notify-me', { endpoint: subscription.endpoint });
+    postToServer('/notify-me', { uid: getCookie("uid") });
+    //console.log("UID:", uid);
 }
 
 async function notifyAll() {

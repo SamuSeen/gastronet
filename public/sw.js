@@ -1,33 +1,33 @@
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/6.4.1/workbox-sw.js');
 
+const cacheVersion = "004";
+
 workbox.setConfig({
     debug: false,
 });
 
 workbox.core.setCacheNameDetails({
-    prefix: "",
-    suffix: "",
+    prefix: "gastronet-",
+    suffix: "-v"+cacheVersion,
 });
 
-workbox.routing.registerRoute(
-    ({ request }) => request.destination === 'image',
-    new workbox.strategies.CacheFirst()
+// Cache all types of requests using CacheFirst strategy
+workbox.routing.setDefaultHandler(
+    new workbox.strategies.CacheFirst({
+        cacheName: "site-cache",
+    })
 );
 
-/*self.addEventListener('push', (event) => {
-    let notification = event.data.json();
-    self.registration.showNotification(
-        notification.title,
-        notification.options
-    );
-});*/
+// Cache images separately using CacheFirst strategy
+workbox.routing.registerRoute(
+    ({ request }) => request.destination === 'image',
+    new workbox.strategies.CacheFirst({
+        cacheName: "image-cache",
+    })
+);
 
-// payload = {
-//     body: "Service worker is now online",
-// };
-
-self.addEventListener("push", (event) => {
-    const payload = event.data ?? "no payload";
+self.addEventListener('push', (event) => {
+    const payload = event.data.json() || { title: "Default Title", body: "Default Body" };
     event.waitUntil(
         self.registration.showNotification(payload.title, {
             body: payload.body,

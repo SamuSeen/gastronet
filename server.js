@@ -2,6 +2,7 @@ const express = require('express');
 const webpush = require('web-push');
 const bodyParser = require('body-parser');
 const Datastore = require('nedb');
+require('dotenv').config();
 //const vapidKeys = webpush.generateVAPIDKeys();
 //console.log(vapidKeys)
 
@@ -30,10 +31,16 @@ webpush.setVapidDetails(
 function sendNotifications(payload, subscriptions) {
     subscriptions.forEach((subscriptionDoc) => {
         const pushSubscription = subscriptionDoc.subscription;
+        //check for subscription
+        if (!pushSubscription) {
+            console.error("Subscription object is undefined or missing.");
+            return;
+        }
+        console.debug("payload:\ntitle:"+payload.title+"\nbody:"+payload.body)
         webpush
-        .sendNotification(pushSubscription, JSON.stringify(payload))
-        .then(() => console.log("Notification sent successfully"))
-        .catch((err) => console.error("Error sending notification:", err));
+            .sendNotification(pushSubscription, JSON.stringify(payload))
+            .then(() => console.log("Notification sent successfully"))
+            .catch((err) => console.error("Error sending notification:", err));
     });
 }
 
@@ -41,8 +48,8 @@ function sendNotifications(payload, subscriptions) {
 function scheduleNotifications() {
     setInterval(() => {
         const payload = {
-        title: "Scheduled Notification",
-        body: "This is a scheduled notification.",
+            title: "Scheduled Notification",
+            body: "This is a scheduled notification.",
         };
 
         //fetch all subscriptioons
@@ -104,6 +111,7 @@ app.post('/remove-subscription', (request, response) => {
 
 app.post("/notify-me", (request, response) => {
     console.log("/notify-me");
+    //console.debug(request)
     const { uid } = request.body;
     const payload = {
         title: "Notification for Me",
@@ -112,12 +120,14 @@ app.post("/notify-me", (request, response) => {
 
     //find subscriptions for the specified user
     db.find({ uid }, (err, subscriptions) => {
+        //console.debug("Looking for user: "+uid)
         if (err) {
             console.error("Error fetching subscriptions:", err);
             return response.status(500).json({ error: "Internal Server Error." });
         }
 
         //send notifications to the user subscriptions
+        //console.debug("Found: "+subscriptions)
         sendNotifications(payload, subscriptions);
         response.sendStatus(200);
     });
