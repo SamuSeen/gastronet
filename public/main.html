@@ -50,10 +50,10 @@
     <h1 href="./main.html">Gastro.Net</h1>
     <nav>
         <ul>
-            <li><a href="#">Login</a></li>
-            <li><a href="loading.html">Register</a></li>
+            <li><a href="#" onclick="showLoginPopup()" id="loginLink">Login</a></li>
+            <li><a href="#" onclick="logoutUser()" id="logoutLink" hidden>Logout</a></li>
             <li><a href="endorder.html">Contact</a></li>
-            <li><a href="./notifications.html">Notifications</a></li>
+            <li><a class="button" href="./notifications.html">Notifications</a></li>
         </ul>
     </nav>
 </header>
@@ -68,12 +68,21 @@
         </ul>
     </nav>
 </div>
-
+<div id="loginPopup" class="loginPopup" hidden>
+        <div class="loginPopup-content">
+            <span class="closePopup" onclick="closePopup()">&times;</span>
+            <label for="uidText">Phone number:</label>
+            <input type="text" id="uidText" maxlength="9" minlength="9" size="9" pattern="\d{9}" title="Phone-number" autofocus  inputmode="numeric" required>
+            <button onclick="registerUser()">Login</button>
+        </div>
+    </div>
 
 <div class="container" id="products">
     <!-- Tutaj będą dodane produkty po kliknięciu -->
 </div>
     <script src="js/app.js"></script>
+    <script src="js/cookies.js"></script>
+    <script src="js/user.js"></script>
 </body>
 <div id="cart-button">
     <a href="cart.html">

@@ -94,20 +94,22 @@ app.post("/add-subscription", (request, response) => {
 //todo fix up client-side
 //wait, what actually does this do?
 app.post('/remove-subscription', (request, response) => {
-    //console.log('/remove-subscription');
-    //console.log(request.body);
-    const { subscription } = request.body
-    db.remove({subscription},{},function (err, numRemoved) {
+    const { subscription } = request.body;
+    const query = { endpoint: subscription.endpoint };
+    db.remove(query, {}, function (err, numRemoved) {
         if (err) {
-            console.error("Error fetching subscriptions:", err);
+            console.error("Error removing subscription:", err);
             return response.status(500).json({ error: "Internal Server Error." });
         }
-        if (numRemoved>0) {
-            return response.status(200);
+
+        if (numRemoved > 0) {
+            return response.status(200).json({ success: true });
+        } else {
+            return response.status(400).json({ error: "Subscription not found" });
         }
     });
-    return response.status(400);
 });
+
 
 app.post("/notify-me", (request, response) => {
     console.log("/notify-me");

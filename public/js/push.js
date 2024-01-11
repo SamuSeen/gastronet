@@ -224,15 +224,15 @@ function urlB64ToUint8Array(base64String) {
 async function postToServer(url, data) {
     try {
         const response = await fetch(url, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
         });
 
         if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
+            throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
         const responseText = await response.text();
@@ -258,3 +258,4 @@ window.onload = registerServiceWorker;
 } else {
     console.warn('Service workers aren\'t supported in this browser.');
 }*/
+
