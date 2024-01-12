@@ -139,32 +139,30 @@
     show: false // Ukryj podpowiedzi trasy
 }).addTo(map);
     </script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
+    <script> //skrypt do wyświetlenia podsumowania zamówienia
+        document.addEventListener('DOMContentLoaded', function () { //po załadowaniu strony wywołaj funkcję showCartProducts
             showCartProducts();
         });
 
-        function showCartProducts() {
-            const cartProductsContainer = document.getElementById('cart-products');
-            let cartProductsHTML = '';
-            let totalAmount = 0;
+        function showCartProducts() { //funkcja showCartProducts
+            const cartProductsContainer = document.getElementById('cart-products'); //utworzenie zmiennej kontenera
+            let cartProductsHTML = ''; //utworzenie pustego HTML
+            let totalAmount = 0; //suma zamówienia
 
-            // Pobierz informacje o produktach w koszyku z localStorage
-            const cartProducts = JSON.parse(localStorage.getItem('cartProducts')) || [];
+            const cartProducts = JSON.parse(localStorage.getItem('cartProducts')) || []; //pobieramy zawartość koszyka z localStorage
 
-            for (let i = 0; i < cartProducts.length; i++) {
-                const name = cartProducts[i].name;
-                const price = cartProducts[i].price;
+            for (let i = 0; i < cartProducts.length; i++) { //dla każdego elementu w cartProducts
+                const name = cartProducts[i].name; //pobieram name do name
+                const price = cartProducts[i].price; //price do price
 
-                cartProductsHTML += `${name} - ${price} PLN<br>`;
+                cartProductsHTML += `${name} - ${price} PLN<br>`; //HTML uzupełniamy o nazwę elementu koszyka, dodajemy myślnik, a potem cenę elementu koszyka
 
-                totalAmount += parseFloat(price);
+                totalAmount += parseFloat(price); //sumujemy łączną kwotę o kwotę elementu dla którego wykonuje się iteracja pętli
             }
 
-            // Dodaj ostatnią linię z łączną kwotą zamówienia
-            cartProductsHTML += `<br>Za łączną kwotę: ${totalAmount.toFixed(2)} PLN`;
+            cartProductsHTML += `<br>Za łączną kwotę: ${totalAmount.toFixed(2)} PLN`; //finalnie dodajemy na końcu HTML, po wyjściu z pętli (czyli po wyczerpaniu elementów w koszyku) od nowej linii tekst z łączną kwotą
 
-            cartProductsContainer.innerHTML = cartProductsHTML;
+            cartProductsContainer.innerHTML = cartProductsHTML; //zmienną kontenera nadpisujemy naszym HTMLem, voila
         }
     </script>
 </body>

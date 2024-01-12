@@ -1,12 +1,10 @@
-function showAllProducts() {
-    showProducts('all');
-}
-document.addEventListener('DOMContentLoaded', function () {
-    showAllProducts();
+document.addEventListener('DOMContentLoaded', function () //event listener na załadowanie strony
+{
+    showProducts('all'); //wywołanie funkcji showProducts która jest niżej
 });
 
-// Menu
-function loadXMLDoc(filename) {
+
+function loadXMLDoc(filename) { //funkcja asynchronicznego ładowania XML
     if (window.XMLHttpRequest) {
         xhttp = new XMLHttpRequest();
     } else {
@@ -15,39 +13,36 @@ function loadXMLDoc(filename) {
     xhttp.open("GET", filename, false);
     try {
         xhttp.responseType = "msxml-document";
-    } catch (err) { } // Helping IE11
+    } catch (err) { }
     xhttp.send("");
     return xhttp.responseXML;
 }
 
-// Dodaj tę funkcję do obsługi dodawania produktów do koszyka
-function addToCart(name, description, price, image) {
-    // Pobierz aktualny stan koszyka z localStorage
-    const cartProducts = JSON.parse(localStorage.getItem('cartProducts')) || [];
+function addToCart(name, description, price, image) { //funkcja dodawania produktów do koszyka wywoływana z 4 parametrami co widać
 
-    // Dodaj nowy produkt do koszyka
-    cartProducts.push({ name, description, price, image });
+    const cartProducts = JSON.parse(localStorage.getItem('cartProducts')) || []; //zmienna do której pobieramy aktualny stan koszyka
 
-    // Zapisz zaktualizowany koszyk z powrotem do localStorage
-    localStorage.setItem('cartProducts', JSON.stringify(cartProducts));
+    cartProducts.push({ name, description, price, image }); //dodanie elementu dla którego wykonujemy funkcję
 
-    // Opcjonalnie możesz dodać powiadomienie o dodaniu do koszyka, jeśli chcesz
-    alert('Product added to cart!');
+    localStorage.setItem('cartProducts', JSON.stringify(cartProducts)); //zapisanie koszyka z nowym elementem
+
+    // powiadomienie o dodaniu do koszyka, ale denerwowało, więc pozostaje do rozważenia
+    //alert('Product added to cart!');
 }
 
-function showCartProducts() {
-    const cartProductsContainer = document.getElementById('cart-products');
-    let cartProductsHTML = '';
+function showCartProducts() { //funkcja od pokazywania listy produktów z koszyka w kontenerze na stronie cart.html
+    const cartProductsContainer = document.getElementById('cart-products'); //utworzenie kontenera o zawartości koszyka
+    let cartProductsHTML = ''; //z początku tworzymy pusty html dla elementów koszyka
 
-    // Pobierz informacje o produktach w koszyku z localStorage
-    const cartProducts = JSON.parse(localStorage.getItem('cartProducts')) || [];
+    const cartProducts = JSON.parse(localStorage.getItem('cartProducts')) || []; //pobranie do zmiennej cartProducts elementów z localStorage (dodawane są do niego przez funkcję addToCart)
 
-    for (let i = 0; i < cartProducts.length; i++) {
-        const name = cartProducts[i].name;
-        const description = cartProducts[i].description;
-        const price = cartProducts[i].price;
+    for (let i = 0; i < cartProducts.length; i++) { //dla każdego elementu cartProducts wywołujemy pętlę
+        const name = cartProducts[i].name; //do zmiennej name przpisujemy name
+        const description = cartProducts[i].description; //itd
+        const price = cartProducts[i].price; //itp
         const image = cartProducts[i].image;
-
+        
+        //potem o ten moduł rozbudowujemy HTMLa:
         cartProductsHTML += `
             <div class="product">
                 <img src="images/${image}" alt="${name}">
@@ -60,25 +55,28 @@ function showCartProducts() {
         `;
     }
 
-    cartProductsContainer.innerHTML = cartProductsHTML;
+    cartProductsContainer.innerHTML = cartProductsHTML; //przypisujemy kontenerowi zawartość naszego HTMLa
 }
 
-function showProducts(category) {
-    const productsContainer = document.getElementById('products');
-    let productsHTML = '';
+function showProducts(category) { //funkcja od wyświetlania listy produktów w kontenerze na stronie po filtrze produktów
+    const productsContainer = document.getElementById('products'); //utworzenie zmiennej kontenera z początku wyświetlający wszystkie elementy products
+    let productsHTML = ''; //użyto let a nie const bo z każdą iteracją pętli for zmieniamy (uzupełniamy) zmienną productsHTML
 
-    const xmlDoc = loadXMLDoc("product.xml"); // Załaduj plik XML
+    const xmlDoc = loadXMLDoc("product.xml"); // ładowanie xmla z listą produktów
 
-    const products = xmlDoc.getElementsByTagName('product');
+    const products = xmlDoc.getElementsByTagName('product'); //pobranie wszystkich elementów z pliku xml po tagu <product> - pomysł na listę produktów z xml zaczerpnąłem z pracy, ale tamtejsze xmle wyglądają inaczej i są dużo bardziej złożone
 
-    for (let i = 0; i < products.length; i++) {
-        const categoryType = products[i].parentNode.getAttribute('name');
-        if (categoryType === category || category === 'all') {
-            const name = products[i].getElementsByTagName('name')[0].childNodes[0].nodeValue;
-            const description = products[i].getElementsByTagName('description')[0].childNodes[0].nodeValue;
-            const price = products[i].getElementsByTagName('price')[0].childNodes[0].nodeValue;
-            const image = products[i].getElementsByTagName('image')[0].childNodes[0].nodeValue;
+    for (let i = 0; i < products.length; i++) { //dla każdego elementu (produktu) w pliku xml wykonujemy krok pętli for
+        const categoryType = products[i].parentNode.getAttribute('name'); //pobranie nazwy kategorii produktu (kolejny zakorzeniony element)
+        if (categoryType === category || category === 'all') { //jeżeli categoryType dla elementu z product.xml jest równy temu który został podany w parametrze dla wywołania funkcji lub jest równy kategorii 'all' to po prostu buduje się productsHTML 
+            const name = products[i].getElementsByTagName('name')[0].childNodes[0].nodeValue; //pobranie nazwy do HTML
+            const description = products[i].getElementsByTagName('description')[0].childNodes[0].nodeValue; //pobranie opisu do HTML
+            const price = products[i].getElementsByTagName('price')[0].childNodes[0].nodeValue; //pobranie ceny do HTML
+            const image = products[i].getElementsByTagName('image')[0].childNodes[0].nodeValue; //pobranie obrazka do HTML
 
+
+            //jeżeli warunki przed ifem zostaną spełnione, to właśnie o taki "moduł" productsHTML zostaje rozbudowywany, jak najzwyklejsza strona
+            //jest tam też przycisk Add to cart wowołujący funkcję addToCart z parametrami opisanymi przy samej funkcji na górze
             productsHTML += `
                 <div class="product">
                     <img src="images/${image}" alt="${name}">
@@ -93,5 +91,5 @@ function showProducts(category) {
         }
     }
 
-    productsContainer.innerHTML = productsHTML;
+    productsContainer.innerHTML = productsHTML; //a tu zmiana wartości zmiennej na zawartość productsHTML utworzonego po filtrze
 }

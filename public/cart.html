@@ -18,8 +18,8 @@
     </nav>
 </header>
 
-<div class="container" id="cart-products">
-    <!-- Tutaj będą dodane zakupione produkty -->
+<div class="container" id="cart-products"> <!-- kontener na produkty z koszyka -->
+    
 </div>
 
 <footer>
@@ -27,24 +27,24 @@
 </footer>
 
 <script src="js/app.js"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
+<script> //skrypt do obsługi koszyka ale zrobiony tu od nowa, żeby móc zmodyfikować przycisk i zamiast mieć dodawanie do koszyka, tu mamy usuwanie do koszyka
+    document.addEventListener('DOMContentLoaded', function () { //po załadowaniu strony wywoływana jest funkcja showCartProducts
         showCartProducts();
     });
 
-    function showCartProducts() {
-        const cartProductsContainer = document.getElementById('cart-products');
-        let cartProductsHTML = '';
+    function showCartProducts() { //a tu jest sama funkcja showCartProducts
+        const cartProductsContainer = document.getElementById('cart-products'); //zmienna dla kontenera
+        let cartProductsHTML = ''; //zmienna HTML który będzie przypisywany do zmiennej cartProductsCointainer na końcu pętli
 
-        // Pobierz informacje o produktach w koszyku z localStorage
-        const cartProducts = JSON.parse(localStorage.getItem('cartProducts')) || [];
+        const cartProducts = JSON.parse(localStorage.getItem('cartProducts')) || []; //pobieramy produkty z localStorage do zmiennej cartProducts
 
-        for (let i = 0; i < cartProducts.length; i++) {
-            const name = cartProducts[i].name;
-            const description = cartProducts[i].description;
+        for (let i = 0; i < cartProducts.length; i++) { //dla każdego elementu w cartProducts
+            const name = cartProducts[i].name; //do zmiennej name przypisujemy element name
+            const description = cartProducts[i].description; //i tak dalej
             const price = cartProducts[i].price;
             const image = cartProducts[i].image;
 
+            //tutaj tworzymy moduł o który rozbudowujemy obecny, na początku pusty HTML
             cartProductsHTML += `
                 <div class="product">
                     <img src="images/${image}" alt="${name}">
@@ -58,25 +58,21 @@
             `;
         }
 
-        cartProductsContainer.innerHTML = cartProductsHTML;
+        cartProductsContainer.innerHTML = cartProductsHTML;// a tu do zmiennej kontenera koszyka przypisujemy zawartość HTMLa żeby potem tego HTMLa w kontenerze móc wyświetlić
     }
 
-    // Dodaj tę funkcję do obsługi usuwania produktów z koszyka
-    function removeFromCart(index) {
-        // Pobierz aktualny stan koszyka z localStorage
-        const cartProducts = JSON.parse(localStorage.getItem('cartProducts')) || [];
+    function removeFromCart(index) { //funkcja remove from cart, którą wywołujemy przyciskiem widocznym wyżej
 
-        // Usuń produkt z koszyka na podstawie indeksu
-        cartProducts.splice(index, 1);
+        const cartProducts = JSON.parse(localStorage.getItem('cartProducts')) || []; //pobieramy elementy koszyka z localstorage
 
-        // Zapisz zaktualizowany koszyk z powrotem do localStorage
-        localStorage.setItem('cartProducts', JSON.stringify(cartProducts));
+        cartProducts.splice(index, 1); //usuń element o ideksie [i] z tablicy 
 
-        // Ponownie wyświetl produkty w koszyku
-        showCartProducts();
+        localStorage.setItem('cartProducts', JSON.stringify(cartProducts)); //aktualizujemy koszyk o zredykowanyy koszyk
+
+        showCartProducts(); //wywołujemy funkcję showCartProducts aby załadowała sobie zmieniony koszyk
     }
 </script>
-<div id="endorder-button">
+<div id="endorder-button">  <!-- przycisk przenoszący nas na stronę z finalizacją zamówienia -->
     <a href="endorder.html">
         <img src="images\625231.png" alt="Cart" />
     </a>
