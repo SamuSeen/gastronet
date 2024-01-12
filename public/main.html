@@ -57,9 +57,10 @@
         </ul>
     </nav>
 </header>
-<div id="filtres" class="fixed-filters">
+<div id="filtres" class="fixed-filters"> <!-- filtry - dla wersji mobilne są przesuwne w poziomie (gdby ilość filrów nie mieściła się w widoku) -->
     <nav>
         <ul>
+            <li><button onclick="showProducts('all')">All</button> <!-- po kliknięciu tego przycisku wywołujemy funkcję showProducts z parametrem 'all' i tak samo dla poniższych -->
             <li><button onclick="showProducts('burgers')">Burgers</button></li>
             <li><button onclick="showProducts('wraps')">Wraps</button></li>
             <li><button onclick="showProducts('sides')">Sides</button></li>
@@ -70,12 +71,11 @@
 </div>
 
 
-<div class="container" id="products">
-    <!-- Tutaj będą dodane produkty po kliknięciu -->
+<div class="container" id="products"> <!-- kontener na produkty -->
 </div>
     <script src="js/app.js"></script>
 </body>
-<div id="cart-button">
+<div id="cart-button"> <!-- przycisk od koszyka przenoszący do cart.html -->
     <a href="cart.html">
         <img src="images\625230.png" alt="Cart" />
     </a>
