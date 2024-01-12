@@ -134,27 +134,26 @@ app.post('/remove-subscription', (request, response) => {
  */
 app.post("/notify-me", (request, response) => {
     console.log("/notify-me");
-    //console.debug(request)
     const { uid } = request.body;
     const payload = {
         title: "Notification for Me",
         body: "This is a personalized notification.",
     };
 
-    //find subscriptions for the specified user
+    // Find subscriptions for the specified user
     db.find({ uid }, (err, subscriptions) => {
-        //console.debug("Looking for user: "+uid)
         if (err) {
-            console.error("Error fetching subscriptions:", err);
-            return response.status(500).json({ error: "Internal Server Error." });
+        console.error("Error fetching subscriptions:", err);
+        return response.status(500).json({ error: "Internal Server Error." });
         }
 
-        //send notifications to the user subscriptions
-        //console.debug("Found: "+subscriptions)
+        // Send notifications to the user subscriptions
         sendNotifications(payload, subscriptions);
         response.sendStatus(200);
     });
 });
+
+
 
 /**
  * Wysyła przykładowe powiadomienie do wszystkich użytkowników
