@@ -1,37 +1,70 @@
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/6.4.1/workbox-sw.js');
+/**
+ * Wersja cache, aktualizować za każdą zmianą strony
+ */
+const cacheVersion = "007";
 
+/**
+ * ustawienia sw
+ */
 workbox.setConfig({
     debug: false,
 });
 
+/**
+ * konfiguracja nazwy cache
+ */
 workbox.core.setCacheNameDetails({
-    prefix: "",
-    suffix: "",
+    prefix: "gastronet-",
+    suffix: "-v" + cacheVersion,
 });
 
-workbox.routing.registerRoute(
-    ({ request }) => request.destination === 'image',
-    new workbox.strategies.CacheFirst()
+/**
+ * Cachuje wszystko a ładuje w pierwszej kolejności z cache
+ */
+workbox.routing.setDefaultHandler(
+    new workbox.strategies.CacheFirst({
+        cacheName: "site-cache",
+    })
 );
 
-/*self.addEventListener('push', (event) => {
-    let notification = event.data.json();
-    self.registration.showNotification(
-        notification.title,
-        notification.options
-    );
-});*/
-
-// payload = {
-//     body: "Service worker is now online",
-// };
-
-self.addEventListener("push", (event) => {
-    const payload = event.data ?? "no payload";
+/**
+ * Usuwa stare cache
+ */
+self.addEventListener('activate', (event) => {
     event.waitUntil(
-        self.registration.showNotification(payload.title, {
-            body: payload.body,
-            icon: "./icons/favicon.ico"
+        caches.keys().then((cacheNames) => {
+            return Promise.all(
+                cacheNames.map((cacheName) => {
+                    if (cacheName.startsWith('gastronet-') && !cacheName.includes(cacheVersion)) {
+                        return caches.delete(cacheName);
+                    }
+                })
+            );
         })
     );
 });
+
+
+/**
+ * Wyświetlanie powiadomienia
+ */
+self.addEventListener('push', (event) => {
+    const payload = event.data.json() || { title: "Default Title", body: "Default Body" };
+
+    const notificationOptions = {
+        title: payload.title || "Test",
+        body: payload.body || "",
+        icon: payload.icon || "./icons/favicon.ico",
+        badge: payload.badge || null,
+        image: payload.image || null,
+        vibrate: payload.vibrate || [200, 100, 200],
+        data: payload.data || null,
+        actions: Array.isArray(payload.actions) ? payload.actions : [],
+    };
+
+    event.waitUntil(
+        self.registration.showNotification(notificationOptions.title, notificationOptions)
+    );
+});
+

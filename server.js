@@ -2,23 +2,27 @@ const express = require('express');
 const webpush = require('web-push');
 const bodyParser = require('body-parser');
 const Datastore = require('nedb');
+require('dotenv').config();
 //const vapidKeys = webpush.generateVAPIDKeys();
 //console.log(vapidKeys)
 
 
 
-//setting up NeDB with synchronous initialization
+/**
+ * Konfiguracja NeDB
+ */
 let db;
 db = new Datastore({ filename: '.data/db.json', autoload: true });
 
-//setting up web-push keys
+/**
+ * Pobieranie kluczy i ustawianie z ze zmiennych środowiskowych
+ */
 const vapidDetails = {
     publicKey: process.env.VAPID_PUBLIC_KEY,
     privateKey: process.env.VAPID_PRIVATE_KEY,
     GCMkey: process.env.GCM_KEY,
     subject: process.env.VAPID_SUBJECT
 };
-
 webpush.setGCMAPIKey(vapidDetails.GCMkey);
 webpush.setVapidDetails(
     vapidDetails.subject,
@@ -26,23 +30,35 @@ webpush.setVapidDetails(
     vapidDetails.privateKey
 );
 
-
+/**
+ * Wysyła payload do wszystkich podanych subscriptions
+ * @param {*} payload title;body
+ * @param {*} subscriptions pobrać z db
+ */
 function sendNotifications(payload, subscriptions) {
     subscriptions.forEach((subscriptionDoc) => {
         const pushSubscription = subscriptionDoc.subscription;
+        //check for subscription
+        if (!pushSubscription) {
+            console.error("Subscription object is undefined or missing.");
+            return;
+        }
+        console.debug("payload:\ntitle:"+payload.title+"\nbody:"+payload.body)
         webpush
-        .sendNotification(pushSubscription, JSON.stringify(payload))
-        .then(() => console.log("Notification sent successfully"))
-        .catch((err) => console.error("Error sending notification:", err));
+            .sendNotification(pushSubscription, JSON.stringify(payload))
+            .then(() => console.log("Notification sent successfully"))
+            .catch((err) => console.error("Error sending notification:", err));
     });
 }
 
-//notification scheduler
+/**
+ * Regularnie wysyłane przykładowe powiadomienie
+ */
 function scheduleNotifications() {
     setInterval(() => {
         const payload = {
-        title: "Scheduled Notification",
-        body: "This is a scheduled notification.",
+            title: "Scheduled Notification",
+            body: "This is a scheduled notification.",
         };
 
         //fetch all subscriptioons
@@ -57,10 +73,16 @@ function scheduleNotifications() {
     }, 60 * 10000); // 1000 milisekundy = 1sec
 }
 
+
+//Sekcja obsługi wiadomości z klienta
 const app = express();
 app.use(bodyParser.json());
 app.use(express.static('public'));
 
+/**
+ * Dodaje subskcrypcję
+ * @param {*} request uid;subscription
+ */
 app.post("/add-subscription", (request, response) => {
     const { uid, subscription, vapidPublicKey } = request.body;
 
@@ -84,26 +106,35 @@ app.post("/add-subscription", (request, response) => {
 });
 
 
-//todo fix up client-side
-//wait, what actually does this do?
+
+/**
+ * Usuwa subskcrypcję
+ * @param {*} request uid;subscription
+ */
 app.post('/remove-subscription', (request, response) => {
-    //console.log('/remove-subscription');
-    //console.log(request.body);
-    const { subscription } = request.body
-    db.remove({subscription},{},function (err, numRemoved) {
+    const { subscription } = request.body;
+    const query = { endpoint: subscription.endpoint };
+    db.remove(query, {}, function (err, numRemoved) {
         if (err) {
-            console.error("Error fetching subscriptions:", err);
+            console.error("Error removing subscription:", err);
             return response.status(500).json({ error: "Internal Server Error." });
         }
-        if (numRemoved>0) {
-            return response.status(200);
+
+        if (numRemoved > 0) {
+            return response.status(200).json({ success: true });
+        } else {
+            return response.status(400).json({ error: "Subscription not found" });
         }
     });
-    return response.status(400);
 });
 
+/**
+ * Wysyła przykładowe powiadomienie do jednego użytkownika
+ * @param {*} request uid
+ */
 app.post("/notify-me", (request, response) => {
     console.log("/notify-me");
+    //console.debug(request)
     const { uid } = request.body;
     const payload = {
         title: "Notification for Me",
@@ -112,17 +143,22 @@ app.post("/notify-me", (request, response) => {
 
     //find subscriptions for the specified user
     db.find({ uid }, (err, subscriptions) => {
+        //console.debug("Looking for user: "+uid)
         if (err) {
             console.error("Error fetching subscriptions:", err);
             return response.status(500).json({ error: "Internal Server Error." });
         }
 
         //send notifications to the user subscriptions
+        //console.debug("Found: "+subscriptions)
         sendNotifications(payload, subscriptions);
         response.sendStatus(200);
     });
 });
 
+/**
+ * Wysyła przykładowe powiadomienie do wszystkich użytkowników
+ */
 app.post("/notify-all", (request, response) => {
     console.log("/notify-all");
     const payload = {

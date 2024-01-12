@@ -1,3 +1,4 @@
 node_modules/
 .env
 PWA.code-workspace
+.data/

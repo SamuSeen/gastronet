@@ -87,7 +87,7 @@ async function unsubscribeFromPush() {
     const registration = await navigator.serviceWorker.getRegistration();
     const subscription = await registration.pushManager.getSubscription();
     postToServer('/remove-subscription', {
-        endpoint: subscription.endpoint
+        endpoint: subscription
         //uid: getCookie("uid")
     });
     await subscription.unsubscribe();
@@ -97,7 +97,9 @@ async function unsubscribeFromPush() {
 async function notifyMe() {
     const registration = await navigator.serviceWorker.getRegistration();
     const subscription = await registration.pushManager.getSubscription();
-    postToServer('/notify-me', { endpoint: subscription.endpoint });
+    //postToServer('/notify-me', { endpoint: subscription.endpoint });
+    postToServer('/notify-me', { uid: getCookie("uid") });
+    //console.log("UID:", uid);
 }
 
 async function notifyAll() {
@@ -222,15 +224,15 @@ function urlB64ToUint8Array(base64String) {
 async function postToServer(url, data) {
     try {
         const response = await fetch(url, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
         });
 
         if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
+            throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
         const responseText = await response.text();
@@ -256,3 +258,4 @@ window.onload = registerServiceWorker;
 } else {
     console.warn('Service workers aren\'t supported in this browser.');
 }*/
+
