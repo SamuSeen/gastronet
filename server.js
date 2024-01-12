@@ -8,18 +8,21 @@ require('dotenv').config();
 
 
 
-//setting up NeDB with synchronous initialization
+/**
+ * Konfiguracja NeDB
+ */
 let db;
 db = new Datastore({ filename: '.data/db.json', autoload: true });
 
-//setting up web-push keys
+/**
+ * Pobieranie kluczy i ustawianie z ze zmiennych środowiskowych
+ */
 const vapidDetails = {
     publicKey: process.env.VAPID_PUBLIC_KEY,
     privateKey: process.env.VAPID_PRIVATE_KEY,
     GCMkey: process.env.GCM_KEY,
     subject: process.env.VAPID_SUBJECT
 };
-
 webpush.setGCMAPIKey(vapidDetails.GCMkey);
 webpush.setVapidDetails(
     vapidDetails.subject,
@@ -27,7 +30,11 @@ webpush.setVapidDetails(
     vapidDetails.privateKey
 );
 
-
+/**
+ * Wysyła payload do wszystkich podanych subscriptions
+ * @param {*} payload title;body
+ * @param {*} subscriptions pobrać z db
+ */
 function sendNotifications(payload, subscriptions) {
     subscriptions.forEach((subscriptionDoc) => {
         const pushSubscription = subscriptionDoc.subscription;
@@ -44,7 +51,9 @@ function sendNotifications(payload, subscriptions) {
     });
 }
 
-//notification scheduler
+/**
+ * Regularnie wysyłane przykładowe powiadomienie
+ */
 function scheduleNotifications() {
     setInterval(() => {
         const payload = {
@@ -64,10 +73,16 @@ function scheduleNotifications() {
     }, 60 * 10000); // 1000 milisekundy = 1sec
 }
 
+
+//Sekcja obsługi wiadomości z klienta
 const app = express();
 app.use(bodyParser.json());
 app.use(express.static('public'));
 
+/**
+ * Dodaje subskcrypcję
+ * @param {*} request uid;subscription
+ */
 app.post("/add-subscription", (request, response) => {
     const { uid, subscription, vapidPublicKey } = request.body;
 
@@ -91,8 +106,11 @@ app.post("/add-subscription", (request, response) => {
 });
 
 
-//todo fix up client-side
-//wait, what actually does this do?
+
+/**
+ * Usuwa subskcrypcję
+ * @param {*} request uid;subscription
+ */
 app.post('/remove-subscription', (request, response) => {
     const { subscription } = request.body;
     const query = { endpoint: subscription.endpoint };
@@ -110,7 +128,10 @@ app.post('/remove-subscription', (request, response) => {
     });
 });
 
-
+/**
+ * Wysyła przykładowe powiadomienie do jednego użytkownika
+ * @param {*} request uid
+ */
 app.post("/notify-me", (request, response) => {
     console.log("/notify-me");
     //console.debug(request)
@@ -135,6 +156,9 @@ app.post("/notify-me", (request, response) => {
     });
 });
 
+/**
+ * Wysyła przykładowe powiadomienie do wszystkich użytkowników
+ */
 app.post("/notify-all", (request, response) => {
     console.log("/notify-all");
     const payload = {

@@ -1,37 +1,70 @@
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/6.4.1/workbox-sw.js');
+/**
+ * Wersja cache, aktualizować za każdą zmianą strony
+ */
+const cacheVersion = "005";
 
-const cacheVersion = "004";
-
+/**
+ * ustawienia sw
+ */
 workbox.setConfig({
     debug: false,
 });
 
+/**
+ * konfiguracja nazwy cache
+ */
 workbox.core.setCacheNameDetails({
     prefix: "gastronet-",
-    suffix: "-v"+cacheVersion,
+    suffix: "-v" + cacheVersion,
 });
 
-// Cache all types of requests using CacheFirst strategy
+/**
+ * Cachuje wszystko a ładuje w pierwszej kolejności z cache
+ */
 workbox.routing.setDefaultHandler(
     new workbox.strategies.CacheFirst({
         cacheName: "site-cache",
     })
 );
 
-// Cache images separately using CacheFirst strategy
-workbox.routing.registerRoute(
-    ({ request }) => request.destination === 'image',
-    new workbox.strategies.CacheFirst({
-        cacheName: "image-cache",
-    })
-);
-
-self.addEventListener('push', (event) => {
-    const payload = event.data.json() || { title: "Default Title", body: "Default Body" };
+/**
+ * Usuwa stare cache
+ */
+self.addEventListener('activate', (event) => {
     event.waitUntil(
-        self.registration.showNotification(payload.title, {
-            body: payload.body,
-            icon: "./icons/favicon.ico"
+        caches.keys().then((cacheNames) => {
+            return Promise.all(
+                cacheNames.map((cacheName) => {
+                    if (cacheName.startsWith('gastronet-') && !cacheName.includes(cacheVersion)) {
+                        return caches.delete(cacheName);
+                    }
+                })
+            );
         })
     );
 });
+
+
+/**
+ * Wyświetlanie powiadomienia
+ */
+self.addEventListener('push', (event) => {
+    const payload = event.data.json() || { title: "Default Title", body: "Default Body" };
+
+    const notificationOptions = {
+        title: payload.title || "Test",
+        body: payload.body || "",
+        icon: payload.icon || "./icons/favicon.ico",
+        badge: payload.badge || null,
+        image: payload.image || null,
+        vibrate: payload.vibrate || [200, 100, 200],
+        data: payload.data || null,
+        actions: payload.actions || null
+    };
+
+    event.waitUntil(
+        self.registration.showNotification(notificationOptions.title, notificationOptions)
+    );
+});
+
