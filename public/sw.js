@@ -2,7 +2,7 @@ importScripts('https://storage.googleapis.com/workbox-cdn/releases/6.4.1/workbox
 /**
  * Wersja cache, aktualizować za każdą zmianą strony
  */
-const cacheVersion = "005";
+const cacheVersion = "007";
 
 /**
  * ustawienia sw
@@ -60,7 +60,7 @@ self.addEventListener('push', (event) => {
         image: payload.image || null,
         vibrate: payload.vibrate || [200, 100, 200],
         data: payload.data || null,
-        actions: payload.actions || null
+        actions: Array.isArray(payload.actions) ? payload.actions : [],
     };
 
     event.waitUntil(

@@ -38,19 +38,13 @@ async function subscribeToPush() {
 }
 
 async function unsubscribeFromPush() {
-    const registration = await navigator.serviceWorker.getRegistration();
-    const subscription = await registration.pushManager.getSubscription();
-
-    if (subscription) {
-        try {
-            await postToServer('/remove-subscription', {
-                endpoint: subscription.endpoint
-            });
-            await subscription.unsubscribe();
-        } catch (error) {
-            console.error('Error during unsubscription:', error);
-        }
-    }
+  const registration = await navigator.serviceWorker.getRegistration();
+  const subscription = await registration.pushManager.getSubscription();
+  postToServer("/remove-subscription", {
+    endpoint: subscription,
+    //uid: getCookie("uid")
+  });
+  await subscription.unsubscribe();
 }
 
 

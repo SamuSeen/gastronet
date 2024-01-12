@@ -87,7 +87,7 @@ async function unsubscribeFromPush() {
     const registration = await navigator.serviceWorker.getRegistration();
     const subscription = await registration.pushManager.getSubscription();
     postToServer('/remove-subscription', {
-        endpoint: subscription.endpoint
+        endpoint: subscription
         //uid: getCookie("uid")
     });
     await subscription.unsubscribe();
