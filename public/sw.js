@@ -36,7 +36,7 @@ self.addEventListener('activate', (event) => {
         caches.keys().then((cacheNames) => {
             return Promise.all(
                 cacheNames.map((cacheName) => {
-                    if (cacheName.startsWith('gastronet-') && !cacheName.includes(cacheVersion)) {
+                    if (cacheName.startsWith('gastronet-') && !cacheName.includes(cacheVersion)) {//jeśli nie ma dobrej wersji
                         return caches.delete(cacheName);
                     }
                 })

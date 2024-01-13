@@ -109,11 +109,11 @@ app.post("/add-subscription", (request, response) => {
 
 /**
  * Usuwa subskcrypcję
- * @param {*} request uid;subscription
+ * @param {*} request endpoint
  */
 app.post('/remove-subscription', (request, response) => {
-    const { subscription } = request.body;
-    const query = { endpoint: subscription.endpoint };
+    const { endpoint } = request.body;
+    const query = { endpoint: endpoint };
     db.remove(query, {}, function (err, numRemoved) {
         if (err) {
             console.error("Error removing subscription:", err);

@@ -74,7 +74,7 @@ async function unsubscribeFromPush() {
     const registration = await navigator.serviceWorker.getRegistration();
     const subscription = await registration.pushManager.getSubscription();
     postToServer("/remove-subscription", {
-        subscription: subscription
+        subscription: subscription.endpoint
         //uid: getCookie("uid")
     });
     await subscription.unsubscribe();
@@ -163,3 +163,4 @@ window.onload = init;
     console.warn('Service workers aren\'t supported in this browser.');
 }*/
 
+//todo app.post przyjmujący custom payload

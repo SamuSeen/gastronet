@@ -1,3 +1,4 @@
+//import js/push.js
 //Loging in logging out logic
 var loginPopup = document.getElementById("loginPopup");
 function showLoginPopup() {
@@ -6,7 +7,9 @@ function showLoginPopup() {
 function closeLoginPopup() {
     loginPopup.hidden=true
 }
-
+/**
+ * Wykonuje procedury związane z rejestracją
+ */
 function registerUser() {
     var uidText = document.getElementById("uidText").value;
     setCookie("uid",uidText,365);
@@ -23,13 +26,16 @@ function logoutUser() {
     updateUI();
 }
 
+/**
+ * aktualizacja ui
+ */
 function updateUI() {
     const user = getCookie("uid");
 
+    //stan przycisków login/logout
     const loginLink = document.getElementById("loginLink");
     const logoutLink = document.getElementById("logoutLink");
-
-    if (user!==null) {
+    if (user !== null) {
         loginLink.hidden = true;
         logoutLink.hidden = false;
     } else {
