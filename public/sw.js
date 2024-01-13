@@ -2,7 +2,7 @@ importScripts('https://storage.googleapis.com/workbox-cdn/releases/6.4.1/workbox
 /**
  * Wersja cache, aktualizować za każdą zmianą strony
  */
-const cacheVersion = "009";
+const cacheVersion = "010";
 
 /**
  * ustawienia sw
