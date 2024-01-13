@@ -35,17 +35,23 @@
   "description": "Zamów jedzenie w Gastronecie",
   "screenshots": [
     {
-      "src": "screenshots/image2.png",
-      "sizes": "1875x948",
+      "src": "screenshots/wide1.png",
+      "sizes": "950x429",
       "type": "image/png",
       "form_factor": "wide",
-      "label": "Wonder Widgets"
+      "label": "Main"
     },
     {
-      "src": "screenshots/image1.png",
-      "sizes": "492x1065",
+      "src": "screenshots/portrait1.png",
+      "sizes": "485x1076",
       "type": "image/png",
-      "label": "Wonder Widgets"
+      "label": "Main"
+    },
+    {
+      "src": "screenshots/portrait2.png",
+      "sizes": "485x1076",
+      "type": "image/png",
+      "label": "Order"
     }
   ]
 }
