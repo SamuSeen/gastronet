@@ -53,14 +53,14 @@
     <nav>
         <ul>
             <li><a href="./cart.html">Back to cart</a></li>
-            <li><a href="#">Login</a></li>
-            <li><a href="#">Register</a></li>
+            <li><a href="#" onclick="showLoginPopup()" id="loginLink">Login</a></li>
+            <li><a href="#" onclick="logoutUser()" id="logoutLink" hidden>Logout</a></li>
             <li><a href="endorder.html">Contact</a></li>
-            <li><a href="./notifications.html">Notifications</a></li>
+            <li><a class="button" href="./notifications.html">Notifications</a></li>
         </ul>
     </nav>
 </header>
-<body>
+<>
     
     <div id="map"></div>
     <div id="sidePanel">
@@ -165,6 +165,8 @@
             cartProductsContainer.innerHTML = cartProductsHTML; //zmienną kontenera nadpisujemy naszym HTMLem, voila
         }
     </script>
+    <script src="js/push.js"></script>
+    <script src="js/user.js"></script>
 </body>
 <footer>
     &copy; GastroNet 2024 | Wszelkie prawa zastrzeżone. v0.003

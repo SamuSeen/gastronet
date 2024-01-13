@@ -32,7 +32,7 @@ webpush.setVapidDetails(
 
 /**
  * Wysyła payload do wszystkich podanych subscriptions
- * @param {*} payload title;body
+ * @param {*} payload powiadomienie, przetwarza title,body,icon,badge,image,vibrate,data,actions
  * @param {*} subscriptions pobrać z db
  */
 function sendNotifications(payload, subscriptions) {
@@ -43,7 +43,7 @@ function sendNotifications(payload, subscriptions) {
             console.error("Subscription object is undefined or missing.");
             return;
         }
-        console.debug("payload:\ntitle:"+payload.title+"\nbody:"+payload.body)
+        //console.debug("payload:\ntitle:"+payload.title+"\nbody:"+payload.body)
         webpush
             .sendNotification(pushSubscription, JSON.stringify(payload))
             .then(() => console.log("Notification sent successfully"))

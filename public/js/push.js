@@ -162,5 +162,3 @@ window.onload = init;
 } else {
     console.warn('Service workers aren\'t supported in this browser.');
 }*/
-
-//todo app.post przyjmujący custom payload
