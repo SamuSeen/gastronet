@@ -2,7 +2,7 @@ importScripts('https://storage.googleapis.com/workbox-cdn/releases/6.4.1/workbox
 /**
  * Wersja cache, aktualizować za każdą zmianą strony
  */
-const cacheVersion = "011";
+const cacheVersion = "012";
 
 /**
  * ustawienia sw
@@ -27,6 +27,22 @@ workbox.routing.setDefaultHandler(
         cacheName: "site-cache",
     })
 );
+
+/**
+ * Media cache
+ */
+/*workbox.routing.registerRoute(
+    /\.(?:png|gif|jpg|jpeg|webp|ico)$/i,//typy plików
+    new workbox.strategies.CacheFirst({
+        cacheName: "media-cache",
+        plugins: [
+        new workbox.expiration.ExpirationPlugin({
+            maxEntries: 100,
+            maxAgeSeconds: 30 * 24 * 60 * 60, //30 dni w sekundach
+        }),
+        ],
+    })
+);*/
 
 /**
  * Usuwa stare cache
