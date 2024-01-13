@@ -1,3 +1,6 @@
+//Mom, can we get an import
+//We have import at home
+//--import at home:--
 document.head.appendChild(
     Object.assign(document.createElement("script"), { src: "js/cookies.js" })
 );
