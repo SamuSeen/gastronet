@@ -59,10 +59,33 @@
 
     <div class="loading" id="loading">Ładowanie...</div>
 
+    <script src="js/push.js"></script>
     <script>
-        setTimeout(function() {
-            window.location.href = "./main.html";
-        }, 3000);
+        async function redirect() {
+            registerServiceWorker();
+            const registration = await navigator.serviceWorker.getRegistration();
+
+            // czy sw został zarejestrowany
+            if (registration) {
+                //jeśli nie aktywny
+                if(!registration.active){
+                    await new Promise(resolve => {
+                        registration.addEventListener('activate', resolve);
+                    });
+                    console.log('Assety załadowane');
+                }
+                window.location.href = "./main.html";
+            } else {
+                // uruchamia ponownie po 1s
+                setTimeout(() => {
+                    redirect();
+                }, 1000);
+            }
+        }
+
+        window.onload = function () {
+            redirect();
+        };
     </script>
 </body>
 </html>

@@ -125,21 +125,21 @@
     <category name="drinks">
         <product>
             <name>Pepsi 0,5L</name>
-             <description>Bottle of Pepsi 0.5L</description>
-             <price>8.00</price>
-             <image>Pepsi.jpg</image>
+            <description>Bottle of Pepsi 0.5L</description>
+            <price>8.00</price>
+            <image>pepsi.jpg</image>
         </product>
         <product>
             <name>Coca-Cola 0,5L</name>
-             <description>Bottle of Coca-Cola 0.5L</description>
-             <price>8.00</price>
-             <image>Cola.jpg</image>
+            <description>Bottle of Coca-Cola 0.5L</description>
+            <price>8.00</price>
+            <image>cola.jpg</image>
         </product>
         <product>
             <name>Sprite 0,5L</name>
-             <description>Bottle of Sprite 0.5L</description>
-             <price>8.00</price>
-             <image>Sprite.jpg</image>
+            <description>Bottle of Sprite 0.5L</description>
+            <price>8.00</price>
+            <image>sprite.jpg</image>
         </product>
     </category>
 

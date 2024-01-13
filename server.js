@@ -61,7 +61,7 @@ function scheduleNotifications() {
             body: "This is a scheduled notification.",
         };
 
-        //fetch all subscriptioons
+        //pobierz subskrypcje
         db.find({}, (err, subscriptions) => {
             if (err) {
                 console.error("Error fetching subscriptions:", err);
@@ -70,7 +70,7 @@ function scheduleNotifications() {
             sendNotifications(payload, subscriptions);
             //response.sendStatus(200);
         });
-    }, 60 * 10000); // 1000 milisekundy = 1sec
+    }, 60 * 10 * 1000); // 1000 milisekundy = 1sec
 }
 
 

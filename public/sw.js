@@ -2,7 +2,7 @@ importScripts('https://storage.googleapis.com/workbox-cdn/releases/6.4.1/workbox
 /**
  * Wersja cache, aktualizować za każdą zmianą strony
  */
-const cacheVersion = "012";
+const cacheVersion = "015";
 
 /**
  * ustawienia sw
@@ -23,10 +23,53 @@ workbox.core.setCacheNameDetails({
  * Cachuje wszystko a ładuje w pierwszej kolejności z cache
  */
 workbox.routing.setDefaultHandler(
-    new workbox.strategies.CacheFirst({
+    new workbox.strategies.NetworkFirst({
         cacheName: "site-cache",
     })
 );
+
+/**
+ * precaching w trakcie installacji service-workera
+ */
+self.addEventListener("install", (event) => {
+    event.waitUntil(
+        caches.open(cacheName).then((cache) => {
+        return cache.addAll([
+            "/index.html",
+            "/cart.html",
+            "/endorder.html",
+            "/main.html",
+            "/notifications.html",
+            "/manifest.json",
+            "/css/endorder.css",
+            "/css/style.css",
+            "/js/app.js",
+            "/js/cookies.js",
+            "/js/notifications.js",
+            "/js/push.js",
+            "/js/user.js",
+            "/images/625230.png",
+            "/images/625231.png",
+            "/images/burger1.jpg",
+            "/images/burger2.jpg",
+            "/images/burger3.jpg",
+            "/images/burger4.jpg",
+            "/images/cola.jpg",
+            "/images/coleslaw1.jpg",
+            "/images/fries1.jpg",
+            "/images/lunchspecial1.jpg",
+            "/images/meal42.jpg",
+            "/images/pepsi.jpg",
+            "/images/sprite.jpg",
+            "/images/wrap1.jpg",
+            "/images/wrap2.jpg",
+            "/images/wrap3.jpg",
+            "/logo.jpg",
+            "/product.xml"
+        ]);
+        })
+    );
+});
 
 /**
  * Media cache

@@ -1,3 +1,6 @@
+document.head.appendChild(
+    Object.assign(document.createElement("script"), { src: "js/push.js" })
+);
 //import js/push.js
 //Loging in logging out logic
 var loginPopup = document.getElementById("loginPopup");
@@ -29,7 +32,7 @@ function logoutUser() {
 /**
  * aktualizacja ui
  */
-function updateUI() {
+function updateUI(){
     const user = getCookie("uid");
 
     //stan przycisków login/logout

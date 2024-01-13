@@ -1,3 +1,8 @@
+document.head.appendChild(
+    Object.assign(document.createElement("script"), { src: "js/cookies.js" })
+);
+
+
 //Service worker
 const VAPID_PUBLIC_KEY = "BCPYdPfs5I-sK0ePZb1NYkb59WMD9bl2WDufHmqBgT9Bppkdnrt7fnQKt8sThE-WJeSf8BHTIgmmKh7ysqn-mvk";
 
@@ -7,7 +12,7 @@ const VAPID_PUBLIC_KEY = "BCPYdPfs5I-sK0ePZb1NYkb59WMD9bl2WDufHmqBgT9Bppkdnrt7fn
 function registerUser() {
     setCookie("uid",document.getElementById("uidText").value,30);
     subscribeToPush();
-    updateUI();
+    try {updateUI()} catch (e) {};
 }
 
 /**
@@ -16,7 +21,7 @@ function registerUser() {
 function removeUser() {
     removeCookie("uid");
     unsubscribeFromPush();
-    updateUI();
+    try {updateUI()} catch (e) {};
 }
 
 /**
@@ -25,7 +30,7 @@ function removeUser() {
 function checkLogin() {
     if(!getCookie("uid")){
         unsubscribeFromPush()
-        updateUI()
+        try {updateUI()} catch (e) {};
     }
 }
 
@@ -38,7 +43,7 @@ async function registerServiceWorker() {
         .catch(function (error) {
             console.error('Service Worker registration failed:', error);
         });
-    updateUI();
+    try {updateUI()} catch (e) {};
 }
 
 /**
@@ -47,7 +52,7 @@ async function registerServiceWorker() {
 async function unregisterServiceWorker() {
     const registration = await navigator.serviceWorker.getRegistration();
     await registration.unregister();
-    updateUI();
+    try {updateUI()} catch (e) {};
 }
 
 /**
@@ -70,7 +75,7 @@ async function subscribeToPush() {
     } catch (error) {
         console.error('Failed to post to server:', error);
     }
-    updateUI();
+    try {updateUI()} catch (e) {};
 }
 
 /**
@@ -85,7 +90,7 @@ async function unsubscribeFromPush() {
         //uid: getCookie("uid")
     });
     await subscription.unsubscribe();
-    updateUI()
+    try {updateUI()} catch (e) {};
 }
 
 /**
@@ -168,7 +173,7 @@ async function postToServer(url, data) {
  */
 function init() {
     registerServiceWorker();
-    updateUI();
-    checkLogin();
+    try {updateUI()} catch (e) {};
+    try {checkLogin();} catch (e) {};
 }
 window.onload = init;
