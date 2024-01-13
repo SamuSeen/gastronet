@@ -16,6 +16,13 @@ function removeUser() {
     updateUI();
 }
 
+function checkLogin() {
+    if(!getCookie("uid")){
+        unsubscribeFromPush()
+        updateUI()
+    }
+}
+
 /* Push notification logic. */
 async function registerServiceWorker() {
     await navigator.serviceWorker.register('./sw.js')
@@ -148,6 +155,7 @@ async function postToServer(url, data) {
 function init() {
     registerServiceWorker();
     updateUI();
+    checkLogin();
 }
 
 window.onload = init;
