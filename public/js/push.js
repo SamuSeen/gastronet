@@ -10,12 +10,18 @@ function registerUser() {
     updateUI();
 }
 
+/**
+ * remove user and unsubscribe
+ */
 function removeUser() {
     removeCookie("uid");
     unsubscribeFromPush();
     updateUI();
 }
 
+/**
+ * Unsubscribe if no user
+ */
 function checkLogin() {
     if(!getCookie("uid")){
         unsubscribeFromPush()
@@ -23,7 +29,7 @@ function checkLogin() {
     }
 }
 
-/* Push notification logic. */
+// Push notification logic.
 async function registerServiceWorker() {
     await navigator.serviceWorker.register('./sw.js')
         .then(function (registration) {
@@ -35,12 +41,18 @@ async function registerServiceWorker() {
     updateUI();
 }
 
+/**
+ * Remove SW
+ */
 async function unregisterServiceWorker() {
     const registration = await navigator.serviceWorker.getRegistration();
     await registration.unregister();
     updateUI();
 }
 
+/**
+ * Wysyła rejestrację push na serwer
+ */
 async function subscribeToPush() {
     const registration = await navigator.serviceWorker.getRegistration();
     const subscription = await registration.pushManager.subscribe({
@@ -55,28 +67,16 @@ async function subscribeToPush() {
             vapidPublicKey: VAPID_PUBLIC_KEY
         });
         console.log('Server response:', responseData);
-        // handle the response as needed
     } catch (error) {
-        // handle the error, if needed
         console.error('Failed to post to server:', error);
     }
     updateUI();
 }
-    /*const registration = await navigator.serviceWorker.getRegistration();
-    const subscription = await registration.pushManager.subscribe({
-        userVisibleOnly: true,
-        applicationServerKey: urlB64ToUint8Array(VAPID_PUBLIC_KEY)
-    });
-    try {
-        const responseData = await postToServer('/add-subscription', subscription);
-        console.log('Server response:', responseData);
-        // handle the response as needed
-    } catch (error) {
-        // handle the error, if needed
-        console.error('Failed to post to server:', error);
-    }
-    updateUI();*/
 
+/**
+ * Wysyła żądanie o usunięcie subskrypcji
+ * todo usuwanie wszystkich subskrypcji usera
+ */
 async function unsubscribeFromPush() {
     const registration = await navigator.serviceWorker.getRegistration();
     const subscription = await registration.pushManager.getSubscription();
@@ -88,14 +88,19 @@ async function unsubscribeFromPush() {
     updateUI()
 }
 
+/**
+ * Żąda przykładowego powiadomienia dla użytkownika
+ */
 async function notifyMe() {
     const registration = await navigator.serviceWorker.getRegistration();
     const subscription = await registration.pushManager.getSubscription();
-    //postToServer('/notify-me', { endpoint: subscription.endpoint });
     postToServer('/notify-me', { uid: getCookie("uid") });
     //console.log("UID:", uid);
 }
 
+/**
+ * Żąda wysłania powiadomienia do wszystkich użytkowników
+ */
 async function notifyAll() {
     const response = await fetch('/notify-all', {
         method: 'POST'
@@ -122,6 +127,12 @@ function urlB64ToUint8Array(base64String) {
     return buffer;
 }
 
+/**
+ * Wysyła dane do serwera
+ * @param {*} url komenda jaką ma przetworzyć serwer przez app.post
+ * @param {*} data payload
+ * @returns odpowiedź serwera
+ */
 async function postToServer(url, data) {
     try {
         const response = await fetch(url, {
@@ -152,21 +163,12 @@ async function postToServer(url, data) {
     }
 }
 
+/**
+ * inicjalizacjia
+ */
 function init() {
     registerServiceWorker();
     updateUI();
     checkLogin();
 }
-
 window.onload = init;
-
-//console.log('VAPID public key:', urlB64ToUint8Array(VAPID_PUBLIC_KEY));
-/*if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('./sw.js')
-        .then(swReg => {
-            console.log('Service worker Registered')
-            updateUI();
-        });
-} else {
-    console.warn('Service workers aren\'t supported in this browser.');
-}*/
