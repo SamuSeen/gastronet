@@ -89,6 +89,7 @@ self.addEventListener("install", (event) => {
                 "./images/familycombo1.jpg",
                 "./images/rings1.jpg",
                 "./logo.jpg",
+                "./icons/favicon.ico"
             ]);
         }),
         ])
