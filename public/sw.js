@@ -2,7 +2,7 @@ importScripts('https://storage.googleapis.com/workbox-cdn/releases/6.4.1/workbox
 /**
  * Wersja cache, aktualizować za każdą zmianą strony
  */
-const cacheVersion = "021";
+const cacheVersion = "019";
 
 /**
  * ustawienia sw
@@ -65,7 +65,7 @@ self.addEventListener("install", (event) => {
             "./js/notifications.js",
             "./js/push.js",
             "./js/user.js",
-            "./product.xml"
+            "./product.xml",
             ]);
         }),
         caches.open("media-cache-v" + cacheVersion).then((cache) => {
@@ -89,7 +89,7 @@ self.addEventListener("install", (event) => {
                 "./images/familycombo1.jpg",
                 "./images/rings1.jpg",
                 "./logo.jpg",
-                "./icons/favicon.ico",
+                "./icons/favicon.ico"
             ]);
         }),
         ])
