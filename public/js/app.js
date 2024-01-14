@@ -4,38 +4,18 @@ document.addEventListener('DOMContentLoaded', function () //event listener na za
 });
 
 
-function loadXMLDoc(filename) {
-    if (navigator.onLine) {
-        // Użytkownik jest online, próbujemy załadować dane z serwera
-        if (window.XMLHttpRequest) {
-            xhttp = new XMLHttpRequest();
-        } else {
-            xhttp = new ActiveXObject("Microsoft.XMLHTTP");
-        }
-        xhttp.open("GET", filename, false);
-        try {
-            xhttp.responseType = "msxml-document";
-        } catch (err) { }
-        xhttp.send("");
-        if (xhttp.status === 200) {
-            // Zapisz dane w schowku
-            localStorage.setItem('cachedXML', new XMLSerializer().serializeToString(xhttp.responseXML));
-            return xhttp.responseXML;
-        } else {
-            console.error('Failed to load XML from the server');
-            return null; // lub inny sposób obsługi błędu ładowania z serwera
-        }
+function loadXMLDoc(filename) { //funkcja asynchronicznego ładowania XML
+    if (window.XMLHttpRequest) {
+        xhttp = new XMLHttpRequest();
     } else {
-        // Użytkownik jest offline, próbujemy załadować dane z lokalnego schowka
-        const cachedData = localStorage.getItem('cachedXML');
-        if (cachedData) {
-            const parser = new DOMParser();
-            return parser.parseFromString(cachedData, 'application/xml');
-        } else {
-            console.error('No cached data available');
-            return null; // lub inny sposób obsługi braku danych
-        }
+        xhttp = new ActiveXObject("Microsoft.XMLHTTP");
     }
+    xhttp.open("GET", filename, false);
+    try {
+        xhttp.responseType = "msxml-document";
+    } catch (err) { }
+    xhttp.send("");
+    return xhttp.responseXML;
 }
 
 function addToCart(name, description, price, image) { //funkcja dodawania produktów do koszyka wywoływana z 4 parametrami co widać

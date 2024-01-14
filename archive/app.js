@@ -142,7 +142,7 @@ function showProducts(category) {
     const productsContainer = document.getElementById('products');
     let productsHTML = '';
 
-    const xmlDoc = loadXMLDoc("product.xml"); // Załaduj plik XML
+    const xmlDoc = loadXMLDoc("product.xml", showProducts); // Załaduj plik XML
 
     const products = xmlDoc.getElementsByTagName('product');
 
