@@ -4,18 +4,23 @@ document.addEventListener('DOMContentLoaded', function () //event listener na za
 });
 
 
-function loadXMLDoc(filename) { //funkcja asynchronicznego ładowania XML
-    if (window.XMLHttpRequest) {
-        xhttp = new XMLHttpRequest();
-    } else {
-        xhttp = new ActiveXObject("Microsoft.XMLHTTP");
-    }
-    xhttp.open("GET", filename, false);
-    try {
-        xhttp.responseType = "msxml-document";
-    } catch (err) { }
-    xhttp.send("");
-    return xhttp.responseXML;
+function loadXMLDoc(filename, callback) {
+    const xhttp = new XMLHttpRequest();
+
+    xhttp.open("GET", filename, true);
+
+    xhttp.onload = function () {
+        if (xhttp.status === 200) {
+            // Sukces - przekazujemy dane do callbacka
+            callback(xhttp.responseXML);
+        } else {
+            // Obsłuż błąd, możesz też przekazać informację o błędzie do callbacka
+            console.error("Błąd ładowania XML:", xhttp.statusText);
+            callback(null);
+        }
+    };
+
+    xhttp.send();
 }
 
 function addToCart(name, description, price, image) { //funkcja dodawania produktów do koszyka wywoływana z 4 parametrami co widać
@@ -58,38 +63,42 @@ function showCartProducts() { //funkcja od pokazywania listy produktów z koszyk
     cartProductsContainer.innerHTML = cartProductsHTML; //przypisujemy kontenerowi zawartość naszego HTMLa
 }
 
-function showProducts(category) { //funkcja od wyświetlania listy produktów w kontenerze na stronie po filtrze produktów
-    const productsContainer = document.getElementById('products'); //utworzenie zmiennej kontenera z początku wyświetlający wszystkie elementy products
-    let productsHTML = ''; //użyto let a nie const bo z każdą iteracją pętli for zmieniamy (uzupełniamy) zmienną productsHTML
+function showProducts(category) {
+    const productsContainer = document.getElementById('products');
 
-    const xmlDoc = loadXMLDoc("product.xml"); // ładowanie xmla z listą produktów
+    loadXMLDoc("product.xml", function (xmlDoc) {
+        if (xmlDoc) {
+            const products = xmlDoc.getElementsByTagName('product');
 
-    const products = xmlDoc.getElementsByTagName('product'); //pobranie wszystkich elementów z pliku xml po tagu <product> - pomysł na listę produktów z xml zaczerpnąłem z pracy, ale tamtejsze xmle wyglądają inaczej i są dużo bardziej złożone
+            let productsHTML = '';
 
-    for (let i = 0; i < products.length; i++) { //dla każdego elementu (produktu) w pliku xml wykonujemy krok pętli for
-        const categoryType = products[i].parentNode.getAttribute('name'); //pobranie nazwy kategorii produktu (kolejny zakorzeniony element)
-        if (categoryType === category || category === 'all') { //jeżeli categoryType dla elementu z product.xml jest równy temu który został podany w parametrze dla wywołania funkcji lub jest równy kategorii 'all' to po prostu buduje się productsHTML 
-            const name = products[i].getElementsByTagName('name')[0].childNodes[0].nodeValue; //pobranie nazwy do HTML
-            const description = products[i].getElementsByTagName('description')[0].childNodes[0].nodeValue; //pobranie opisu do HTML
-            const price = products[i].getElementsByTagName('price')[0].childNodes[0].nodeValue; //pobranie ceny do HTML
-            const image = products[i].getElementsByTagName('image')[0].childNodes[0].nodeValue; //pobranie obrazka do HTML
+            for (let i = 0; i < products.length; i++) {
+                const categoryType = products[i].parentNode.getAttribute('name');
 
+                if (categoryType === category || category === 'all') {
+                    const name = products[i].getElementsByTagName('name')[0].childNodes[0].nodeValue;
+                    const description = products[i].getElementsByTagName('description')[0].childNodes[0].nodeValue;
+                    const price = products[i].getElementsByTagName('price')[0].childNodes[0].nodeValue;
+                    const image = products[i].getElementsByTagName('image')[0].childNodes[0].nodeValue;
 
-            //jeżeli warunki przed ifem zostaną spełnione, to właśnie o taki "moduł" productsHTML zostaje rozbudowywany, jak najzwyklejsza strona
-            //jest tam też przycisk Add to cart wowołujący funkcję addToCart z parametrami opisanymi przy samej funkcji na górze
-            productsHTML += `
-                <div class="product">
-                    <img src="images/${image}" alt="${name}">
-                    <div>
-                        <h3>${name}</h3>
-                        <p>Description: ${description}</p>
-                        <p>Price: ${price} PLN</p>
-                        <button onclick="addToCart('${name}', '${description}', '${price}', '${image}')">Add to cart</button>
-                    </div>
-                </div>
-            `;
+                    productsHTML += `
+                        <div class="product">
+                            <img src="images/${image}" alt="${name}">
+                            <div>
+                                <h3>${name}</h3>
+                                <p>Description: ${description}</p>
+                                <p>Price: ${price} PLN</p>
+                                <button onclick="addToCart('${name}', '${description}', '${price}', '${image}')">Add to cart</button>
+                            </div>
+                        </div>
+                    `;
+                }
+            }
+
+            productsContainer.innerHTML = productsHTML;
+        } else {
+            // Obsłuż błąd ładowania XML
+            console.error("Błąd ładowania XML");
         }
-    }
-
-    productsContainer.innerHTML = productsHTML; //a tu zmiana wartości zmiennej na zawartość productsHTML utworzonego po filtrze
+    });
 }
