@@ -65,11 +65,7 @@ self.addEventListener("install", (event) => {
             "./js/notifications.js",
             "./js/push.js",
             "./js/user.js",
-            "./product.xml",
-            "./leaflet@1.7.1/dist/leaflet.css",
-            "./leaflet@1.7.1/dist/leaflet.js",
-            "./leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css",
-            "./leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"
+            "./product.xml"
             ]);
         }),
         caches.open("media-cache-v" + cacheVersion).then((cache) => {
@@ -94,7 +90,6 @@ self.addEventListener("install", (event) => {
                 "./images/rings1.jpg",
                 "./logo.jpg",
                 "./icons/favicon.ico",
-                "./leaflet-routing-machine@3.2.12/dist/routing-icon.png"
             ]);
         }),
         ])
